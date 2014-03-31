@@ -31,7 +31,6 @@
 		5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCryptoTests.swift; sourceTree = "<group>"; };
 		5ED8F9FF1C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED8FA091C51827400DE0760 /* SCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCrypto.swift; sourceTree = "<group>"; };
-		5ED8FA141C51841C00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +57,6 @@
 			children = (
 				5ED8F9F01C51788B00DE0760 /* SCrypto */,
 				5ED8F9FC1C51788B00DE0760 /* SCryptoTests */,
-				5ED8FA111C51841C00DE0760 /* CommonCrypto */,
 				5ED8F9EF1C51788B00DE0760 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,14 +87,6 @@
 				5ED8F9FF1C51788B00DE0760 /* Info.plist */,
 			);
 			path = SCryptoTests;
-			sourceTree = "<group>";
-		};
-		5ED8FA111C51841C00DE0760 /* CommonCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				5ED8FA141C51841C00DE0760 /* Info.plist */,
-			);
-			path = CommonCrypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
