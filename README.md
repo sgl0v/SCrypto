@@ -16,14 +16,17 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 
 - [x] Essential `NSData` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
 - [x] Supports Swift 2.0 and Swift 2.2
+- [x] Cocoapods and Carthage compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
+- [ ] iOS and OS X support
+- [ ] Swift Package Manager support
 
 ##<a name="requirements"></a>Requirements
 
 - iOS 9.0 or later
 - Swift 2.0+
-- Xcode 7.2+
+- Xcode 7.3+
 
 ##<a name="installation"></a>Installation
 ### Cocoapods
@@ -66,8 +69,38 @@ github "sgl0v/SCrypto" ~> 1.0
 
 Run `carthage update` to build the framework and drag the built `SCrypto.framework` into your Xcode project.
 
+### Manually
+If you prefer not to use either of the mentioned dependency managers, you can integrate SCrypto into your project manually.
 
-##<a name="demo"></a>Demo
+- Open up Terminal, `cd` into your top-level project directory, and run the following command "if" your project is not initialized as a git repository:
+
+```bash
+$ git init
+```
+
+- Add SCrypto as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following command:
+
+```bash
+$ git submodule add https://github.com/sgl0v/SCrypto.git
+```
+
+- Open the new `SCrypto` folder, and drag the `SCrypto.xcodeproj` into the Project Navigator of your application's Xcode project.
+
+    > The `SCrypto.xcodeproj` should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
+
+- Select the `SCrypto.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
+- Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
+- In the tab bar at the top of that window, open the "General" panel.
+- Click on the `+` button under the "Embedded Binaries" section.
+- You will see two different `SCrypto.xcodeproj` folders each with two different versions of the `SCrypto.framework iOS` nested inside a `Products` folder.
+
+    > It doesn't matter which `Products` folder you choose from.
+    
+- Just select the `SCrypto.framework iOS` and that's it!
+
+> The `SCrypto.framework` is automagically added as a target dependency and should appear as a linked and embedded framework in the `Build Phases` section.
+
+##<a name="usage"></a>Usage
 
  
 ##<a name="licence"></a>Licence
