@@ -1,0 +1,534 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5ED8F9F21C51788B00DE0760 /* SCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED8F9F11C51788B00DE0760 /* SCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5ED8F9F91C51788B00DE0760 /* SCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */; };
+		5ED8F9FE1C51788B00DE0760 /* SCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */; };
+		5ED8FA0A1C51827400DE0760 /* SCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8FA091C51827400DE0760 /* SCrypto.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5ED8F9FA1C51788B00DE0760 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ED8F9E51C51788B00DE0760 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ED8F9ED1C51788B00DE0760;
+			remoteInfo = SCrypto;
+		};
+		5ED8FA181C51842800DE0760 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ED8F9E51C51788B00DE0760 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ED8FA0F1C51841C00DE0760;
+			remoteInfo = CommonCrypto;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ED8F9F11C51788B00DE0760 /* SCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCrypto.h; sourceTree = "<group>"; };
+		5ED8F9F31C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCryptoTests.swift; sourceTree = "<group>"; };
+		5ED8F9FF1C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5ED8FA091C51827400DE0760 /* SCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCrypto.swift; sourceTree = "<group>"; };
+		5ED8FA101C51841C00DE0760 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ED8FA141C51841C00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5ED8F9EA1C51788B00DE0760 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8F9F51C51788B00DE0760 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ED8F9F91C51788B00DE0760 /* SCrypto.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8FA0C1C51841C00DE0760 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5ED8F9E41C51788B00DE0760 = {
+			isa = PBXGroup;
+			children = (
+				5ED8F9F01C51788B00DE0760 /* SCrypto */,
+				5ED8F9FC1C51788B00DE0760 /* SCryptoTests */,
+				5ED8FA111C51841C00DE0760 /* CommonCrypto */,
+				5ED8F9EF1C51788B00DE0760 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5ED8F9EF1C51788B00DE0760 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */,
+				5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */,
+				5ED8FA101C51841C00DE0760 /* CommonCrypto.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5ED8F9F01C51788B00DE0760 /* SCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				5ED8F9F11C51788B00DE0760 /* SCrypto.h */,
+				5ED8F9F31C51788B00DE0760 /* Info.plist */,
+				5ED8FA091C51827400DE0760 /* SCrypto.swift */,
+			);
+			path = SCrypto;
+			sourceTree = "<group>";
+		};
+		5ED8F9FC1C51788B00DE0760 /* SCryptoTests */ = {
+			isa = PBXGroup;
+			children = (
+				5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */,
+				5ED8F9FF1C51788B00DE0760 /* Info.plist */,
+			);
+			path = SCryptoTests;
+			sourceTree = "<group>";
+		};
+		5ED8FA111C51841C00DE0760 /* CommonCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				5ED8FA141C51841C00DE0760 /* Info.plist */,
+			);
+			path = CommonCrypto;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5ED8F9EB1C51788B00DE0760 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ED8F9F21C51788B00DE0760 /* SCrypto.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8FA0D1C51841C00DE0760 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5ED8F9ED1C51788B00DE0760 /* SCrypto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto" */;
+			buildPhases = (
+				5ED8F9E91C51788B00DE0760 /* Sources */,
+				5ED8F9EA1C51788B00DE0760 /* Frameworks */,
+				5ED8F9EB1C51788B00DE0760 /* Headers */,
+				5ED8F9EC1C51788B00DE0760 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ED8FA191C51842800DE0760 /* PBXTargetDependency */,
+			);
+			name = SCrypto;
+			productName = SCrypto;
+			productReference = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5ED8F9F71C51788B00DE0760 /* SCryptoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCryptoTests" */;
+			buildPhases = (
+				5ED8F9F41C51788B00DE0760 /* Sources */,
+				5ED8F9F51C51788B00DE0760 /* Frameworks */,
+				5ED8F9F61C51788B00DE0760 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ED8F9FB1C51788B00DE0760 /* PBXTargetDependency */,
+			);
+			name = SCryptoTests;
+			productName = SCryptoTests;
+			productReference = 5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5ED8FA0F1C51841C00DE0760 /* CommonCrypto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ED8FA151C51841C00DE0760 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
+			buildPhases = (
+				5ED8FA1A1C51843A00DE0760 /* ShellScript */,
+				5ED8FA0B1C51841C00DE0760 /* Sources */,
+				5ED8FA0C1C51841C00DE0760 /* Frameworks */,
+				5ED8FA0D1C51841C00DE0760 /* Headers */,
+				5ED8FA0E1C51841C00DE0760 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CommonCrypto;
+			productName = CommonCrypto;
+			productReference = 5ED8FA101C51841C00DE0760 /* CommonCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5ED8F9E51C51788B00DE0760 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Maksym Shcheglov";
+				TargetAttributes = {
+					5ED8F9ED1C51788B00DE0760 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					5ED8F9F71C51788B00DE0760 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					5ED8FA0F1C51841C00DE0760 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 5ED8F9E81C51788B00DE0760 /* Build configuration list for PBXProject "SCrypto" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5ED8F9E41C51788B00DE0760;
+			productRefGroup = 5ED8F9EF1C51788B00DE0760 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5ED8F9ED1C51788B00DE0760 /* SCrypto */,
+				5ED8F9F71C51788B00DE0760 /* SCryptoTests */,
+				5ED8FA0F1C51841C00DE0760 /* CommonCrypto */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5ED8F9EC1C51788B00DE0760 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8F9F61C51788B00DE0760 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8FA0E1C51841C00DE0760 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5ED8FA1A1C51843A00DE0760 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "printf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${SRCROOT}/CommonCrypto/module.map\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5ED8F9E91C51788B00DE0760 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ED8FA0A1C51827400DE0760 /* SCrypto.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8F9F41C51788B00DE0760 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ED8F9FE1C51788B00DE0760 /* SCryptoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ED8FA0B1C51841C00DE0760 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5ED8F9FB1C51788B00DE0760 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ED8F9ED1C51788B00DE0760 /* SCrypto */;
+			targetProxy = 5ED8F9FA1C51788B00DE0760 /* PBXContainerItemProxy */;
+		};
+		5ED8FA191C51842800DE0760 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ED8FA0F1C51841C00DE0760 /* CommonCrypto */;
+			targetProxy = 5ED8FA181C51842800DE0760 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5ED8FA001C51788B00DE0760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5ED8FA011C51788B00DE0760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5ED8FA031C51788B00DE0760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5ED8FA041C51788B00DE0760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		5ED8FA061C51788B00DE0760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5ED8FA071C51788B00DE0760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5ED8FA161C51841C00DE0760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "$(SRCROOT)/CommonCrypto/module.map";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5ED8FA171C51841C00DE0760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "$(SRCROOT)/CommonCrypto/module.map";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5ED8F9E81C51788B00DE0760 /* Build configuration list for PBXProject "SCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ED8FA001C51788B00DE0760 /* Debug */,
+				5ED8FA011C51788B00DE0760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ED8FA031C51788B00DE0760 /* Debug */,
+				5ED8FA041C51788B00DE0760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCryptoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ED8FA061C51788B00DE0760 /* Debug */,
+				5ED8FA071C51788B00DE0760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5ED8FA151C51841C00DE0760 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ED8FA161C51841C00DE0760 /* Debug */,
+				5ED8FA171C51841C00DE0760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5ED8F9E51C51788B00DE0760 /* Project object */;
+}
