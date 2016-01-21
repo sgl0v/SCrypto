@@ -177,7 +177,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5ED8FA151C51841C00DE0760 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
 			buildPhases = (
-				5ED8FA1A1C51843A00DE0760 /* ShellScript */,
 				5ED8FA0B1C51841C00DE0760 /* Sources */,
 				5ED8FA0C1C51841C00DE0760 /* Frameworks */,
 				5ED8FA0D1C51841C00DE0760 /* Headers */,
@@ -255,22 +254,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5ED8FA1A1C51843A00DE0760 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "printf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${SRCROOT}/CommonCrypto/module.map\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5ED8F9E91C51788B00DE0760 /* Sources */ = {
@@ -416,6 +399,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -435,6 +419,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
@@ -468,7 +453,7 @@
 				INFOPLIST_FILE = CommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/CommonCrypto/module.map";
+				MODULEMAP_FILE = "${SRCROOT}/CommonCrypto/module.map";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.CommonCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -485,7 +470,7 @@
 				INFOPLIST_FILE = CommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/CommonCrypto/module.map";
+				MODULEMAP_FILE = "${SRCROOT}/CommonCrypto/module.map";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.CommonCrypto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -511,6 +496,7 @@
 				5ED8FA041C51788B00DE0760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCryptoTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +505,7 @@
 				5ED8FA071C51788B00DE0760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5ED8FA151C51841C00DE0760 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +514,7 @@
 				5ED8FA171C51841C00DE0760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

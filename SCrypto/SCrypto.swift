@@ -8,6 +8,3 @@
 
 import CommonCrypto
 
-class SCrypto: NSObject {
-
-}
