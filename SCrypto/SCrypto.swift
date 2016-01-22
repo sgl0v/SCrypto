@@ -73,50 +73,40 @@ public class Digest {
         return digest
     }
 
-    public static func MD2(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.MD2)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func MD2(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.MD2, bytes: bytes, length: length)
     }
 
-    public static func MD4(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.MD4)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func MD4(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.MD4, bytes: bytes, length: length)
     }
 
-    public static func MD5(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.MD5)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func MD5(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.MD5, bytes: bytes, length: length)
     }
 
-    public static func SHA1(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.SHA1)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func SHA1(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.SHA1, bytes: bytes, length: length)
     }
 
-    public static func SHA224(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.SHA224)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func SHA224(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.SHA224, bytes: bytes, length: length)
     }
 
-    public static func SHA256(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.SHA256)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func SHA256(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.SHA256, bytes: bytes, length: length)
     }
 
-    public static func SHA384(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.SHA384)
-        digest.update(bytes, length: length)
-        return digest.final()
+    public static func SHA384(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.SHA384, bytes: bytes, length: length)
     }
 
-    public static func SHA512(bytes bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(.SHA512)
+    public static func SHA512(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        return digest(.SHA512, bytes: bytes, length: length)
+    }
+
+    private static func digest(algorithm: Algorithm, bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
+        let digest = Digest(algorithm)
         digest.update(bytes, length: length)
         return digest.final()
     }
