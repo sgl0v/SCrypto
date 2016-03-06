@@ -13,45 +13,24 @@ public class Digest {
     public enum Algorithm {
         case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 
-        internal var digestLength: Int32 {
+        internal var digest : (length: Int32, function: (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>) {
             switch self {
             case .MD2:
-                return CC_MD2_DIGEST_LENGTH
+                return (CC_MD2_DIGEST_LENGTH, CC_MD2)
             case .MD4:
-                return CC_MD4_DIGEST_LENGTH
+                return (CC_MD4_DIGEST_LENGTH, CC_MD4)
             case .MD5:
-                return CC_MD5_DIGEST_LENGTH
+                return (CC_MD5_DIGEST_LENGTH, CC_MD5)
             case .SHA1:
-                return CC_SHA1_DIGEST_LENGTH
+                return (CC_SHA1_DIGEST_LENGTH, CC_SHA1)
             case .SHA224:
-                return CC_SHA224_DIGEST_LENGTH
+                return (CC_SHA224_DIGEST_LENGTH, CC_SHA224)
             case .SHA256:
-                return CC_SHA256_DIGEST_LENGTH
+                return (CC_SHA256_DIGEST_LENGTH, CC_SHA256)
             case .SHA384:
-                return CC_SHA384_DIGEST_LENGTH
+                return (CC_SHA384_DIGEST_LENGTH, CC_SHA384)
             case .SHA512:
-                return CC_SHA512_DIGEST_LENGTH
-            }
-        }
-
-        internal var digestFunction: (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8> {
-            switch self {
-            case .MD2:
-                return CC_MD2
-            case .MD4:
-                return CC_MD4
-            case .MD5:
-                return CC_MD5
-            case .SHA1:
-                return CC_SHA1
-            case .SHA224:
-                return CC_SHA224
-            case .SHA256:
-                return CC_SHA256
-            case .SHA384:
-                return CC_SHA384
-            case .SHA512:
-                return CC_SHA512
+                return (CC_SHA512_DIGEST_LENGTH, CC_SHA512)
             }
         }
     }
@@ -68,8 +47,8 @@ public class Digest {
     }
 
     public func final() -> [UInt8] {
-        var digest = [UInt8](count: Int(self.algorithm.digestLength), repeatedValue: 0)
-        self.algorithm.digestFunction(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
+        var digest = [UInt8](count: Int(self.algorithm.digest.length), repeatedValue: UInt8(0))
+        self.algorithm.digest.function(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
         return digest
     }
 
