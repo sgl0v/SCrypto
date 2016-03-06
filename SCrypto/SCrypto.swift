@@ -91,3 +91,65 @@ public class Digest {
     }
 
 }
+
+public extension NSData {
+
+    public func MD2() -> NSData {
+        return digest(Digest.MD2)
+    }
+
+    public func MD4() -> NSData {
+        return digest(Digest.MD4)
+    }
+
+    public func MD5() -> NSData {
+        return digest(Digest.MD5)
+    }
+
+    public func SHA1() -> NSData {
+        return digest(Digest.SHA1)
+    }
+
+    public func SHA224() -> NSData {
+        return digest(Digest.SHA224)
+    }
+
+    public func SHA256() -> NSData {
+        return digest(Digest.SHA256)
+    }
+
+    public func SHA384() -> NSData {
+        return digest(Digest.SHA384)
+    }
+
+    public func SHA512() -> NSData {
+        return digest(Digest.SHA512)
+    }
+
+    private func digest(digestFunc: (bytes: UnsafePointer<Void>, length: Int) -> [UInt8]) -> NSData {
+        let digest = digestFunc(bytes: self.bytes, length: self.length)
+        return NSData(bytes: digest, length: digest.count)
+    }
+
+}
+
+public class Random {
+
+    public static func generateBytes(bytes : UnsafeMutablePointer<Void>, length : Int) {
+        let statusCode = CCRandomGenerateBytes(bytes, length)
+        assert(statusCode != 1, "CCRandomGenerateBytes failed with status code: \(statusCode)")
+    }
+}
+
+public extension NSData {
+
+    public static func random(length : Int) -> NSData {
+        let bytes = UnsafeMutablePointer<UInt8>.alloc(length)
+        Random.generateBytes(bytes, length: length)
+        let data = NSData(bytes: bytes, length: length)
+        bytes.dealloc(length)
+        return data
+    }
+
+}
+
