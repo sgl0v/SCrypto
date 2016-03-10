@@ -8,8 +8,17 @@
 
 import CommonCrypto
 
+// MARK: Message Digest
+
+/// The Digest class defines methods to evaluate message digest.
 public class Digest {
 
+    /**
+     The cryptographic algorithm types to evaluate message digest.
+
+     MD2, MD4, and MD5 are recommended only for compatibility with existing applications.
+     In new applications, SHA-256(or greater) should be preferred.
+     */
     public enum Algorithm {
         case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 
@@ -38,48 +47,134 @@ public class Digest {
     private let algorithm: Algorithm
     private let data = NSMutableData()
 
+    /**
+     Initializes a new digest object with the provided cryptographic algorithm.
+
+     - Parameters:
+     - algorithm: The cryptographic algorithm to use.
+
+     - Returns: A newly created object to compute the message digest.
+     */
     init(_ algorithm: Algorithm) {
         self.algorithm = algorithm
     }
 
+    /**
+     Appends specified bytes to the internal buffer. Can be called repeatedly with chunks of the message to be hashed.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+     */
     public func update(bytes: UnsafePointer<Void>, length: Int) {
         self.data.appendBytes(bytes, length: length)
     }
 
+    /**
+     Computes the message digest.
+
+     - returns: the message digest.
+     */
     public func final() -> [UInt8] {
         var digest = [UInt8](count: Int(self.algorithm.digest.length), repeatedValue: UInt8(0))
         self.algorithm.digest.function(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
         return digest
     }
 
+     /**
+     Computes the MD2 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the MD2 message digest.
+     */
     public static func MD2(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.MD2, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the MD4 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the MD4 message digest.
+     */
     public static func MD4(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.MD4, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the MD5 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the MD5 message digest.
+     */
     public static func MD5(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.MD5, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the SHA1 message digest at data and returns the result.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the SHA1 message digest.
+     */
     public static func SHA1(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.SHA1, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the SHA224 message digest at data and returns the result.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the SHA224 message digest.
+     */
     public static func SHA224(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.SHA224, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the SHA256 message digest at data and returns the result.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the SHA256 message digest.
+     */
     public static func SHA256(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.SHA256, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the SHA384 message digest at data and returns the result.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the SHA384 message digest.
+     */
     public static func SHA384(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.SHA384, bytes: bytes, length: length)
     }
 
+    /**
+     Computes the SHA512 message digest at data and returns the result.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+
+     - returns: the SHA512 message digest.
+     */
     public static func SHA512(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
         return digest(.SHA512, bytes: bytes, length: length)
     }
@@ -92,36 +187,80 @@ public class Digest {
 
 }
 
+/// The NSData extension defines methods to compute the message digest.
 public extension NSData {
 
+    /**
+     Computes the MD2 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - returns: the MD2 message digest.
+     */
     public func MD2() -> NSData {
         return digest(Digest.MD2)
     }
 
+    /**
+     Computes the MD4 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - returns: the MD4 message digest.
+     */
     public func MD4() -> NSData {
         return digest(Digest.MD4)
     }
 
+    /**
+     Computes the MD5 message digest at data and returns the result.
+     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
+
+     - returns: the MD5 message digest.
+     */
     public func MD5() -> NSData {
         return digest(Digest.MD5)
     }
 
+    /**
+     Computes the SHA-1 message digest at data and returns the result.
+
+     - returns: the SHA-1 message digest.
+     */
     public func SHA1() -> NSData {
         return digest(Digest.SHA1)
     }
 
+    /**
+     Computes the SHA224 message digest at data and returns the result.
+
+     - returns: the SHA224 message digest.
+     */
     public func SHA224() -> NSData {
         return digest(Digest.SHA224)
     }
 
+    /**
+     Computes the SHA256 message digest at data and returns the result.
+
+     - returns: the SHA256 message digest.
+     */
     public func SHA256() -> NSData {
         return digest(Digest.SHA256)
     }
 
+    /**
+     Computes the SHA384 message digest at data and returns the result.
+
+     - returns: the SHA384 message digest.
+     */
     public func SHA384() -> NSData {
         return digest(Digest.SHA384)
     }
 
+    /**
+     Computes the SHA512 message digest at data and returns the result.
+
+     - returns: the SHA512 message digest.
+     */
     public func SHA512() -> NSData {
         return digest(Digest.SHA512)
     }
@@ -133,16 +272,34 @@ public extension NSData {
 
 }
 
+// MARK: Random
+
+/// The Random class defines a method for random bytes generation.
 public class Random {
 
+    /**
+     Returns random bytes in a buffer allocated by the caller.
+
+     - parameter bytes:  Pointer to the return buffer.
+     - parameter length: Number of random bytes to return.
+     */
     public static func generateBytes(bytes : UnsafeMutablePointer<Void>, length : Int) {
         let statusCode = CCRandomGenerateBytes(bytes, length)
         assert(statusCode != 1, "CCRandomGenerateBytes failed with status code: \(statusCode)")
     }
 }
 
+/// The NSData extension defines a method for random bytes generation.
 public extension NSData {
 
+    /**
+     Creates NSData object of the specified length and populates it with randomly generated bytes.
+     The created object has cryptographically strong random bits suitable for use as cryptographic keys, IVs, nonces etc.
+
+     - parameter length: Number of random bytes to return.
+
+     - returns: newly created NSData object populated with randomly generated bytes.
+     */
     public static func random(length : Int) -> NSData {
         let bytes = UnsafeMutablePointer<UInt8>.alloc(length)
         Random.generateBytes(bytes, length: length)
