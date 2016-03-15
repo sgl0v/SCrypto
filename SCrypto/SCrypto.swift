@@ -365,8 +365,7 @@ public class HMAC {
     /**
      Appends specified bytes to the internal buffer. Can be called repeatedly with chunks of the message.
 
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
+     - parameter message:  The message to be hashed.
      */
     public func update(message: Message) {
         self.message.appendBytes(message.bytes, length: message.length)
@@ -394,9 +393,60 @@ public class HMAC {
 /// The NSData extension defines methods to compute the HMAC.
 public extension NSData {
 
-    public func HMAC(algorithm: HMAC.Algorithm, key: NSData) -> NSData {
-        let hmac = HMAC.hmac(algorithm: algorithm, message: (self.bytes, self.length), key: (key.bytes, key.length))
+    public func hmac(algorithm: HMAC.Algorithm, key: NSData) -> NSData {
+        let hmac = HMAC.hmac(algorithm, message: (self.bytes, self.length), key: (key.bytes, key.length))
         return NSData(bytes: hmac, length: hmac.count)
+    }
+
+}
+
+// MARK: Cryptor
+
+/// The Cryptor class provides access to a number of symmetric encryption algorithms.
+public class Cryptor {
+
+    public typealias Data = RawData
+    public typealias Key = RawData
+    public typealias IV = RawData
+
+    /**
+     The encryption algorithms that are supported by the Cryptor.
+     */
+    public enum Algorithm: UInt32 {
+        case AES = 0, DES, TripleDES, CAST, RC4, Blowfish
+    }
+    
+    public enum Operation: UInt32 {
+        case Encrypt, Dencrypt
+    }
+
+    private let algorithm: Algorithm
+
+    init(algorithm: Algorithm) {
+        self.algorithm = algorithm
+    }
+
+    public func crypt(data: Data, key: Key, iv: IV, operation: Operation) -> [UInt8]? {
+        var outLength: size_t = 0
+        var dataOut = [UInt8](count: Int(data.length + kCCBlockSizeAES128), repeatedValue: UInt8(0))
+
+        // http://stackoverflow.com/questions/25754147/issue-using-cccrypt-commoncrypt-in-swift
+        let result = CCCrypt(operation.rawValue, // operation
+            self.algorithm.rawValue, // Algorithm
+            UInt32(kCCOptionPKCS7Padding), // options
+            key.bytes, // key
+            key.length, // keylength
+            iv.bytes, // iv
+            data.bytes, // dataIn
+            data.length, // dataInLength,
+            &dataOut, // dataOut
+            dataOut.count, // dataOutAvailable
+            &outLength) // dataOutMoved
+        if result == Int32(kCCSuccess) {
+            return Array(dataOut[0..<Int(outLength)])
+        } else {
+            return nil
+        }
     }
 
 }
