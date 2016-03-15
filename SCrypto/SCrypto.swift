@@ -8,6 +8,9 @@
 
 import CommonCrypto
 
+/// The tuple with raw bytes and its length
+public typealias RawData = (bytes: UnsafePointer<Void>, length: Int)
+
 // MARK: Message Digest
 
 /// The Digest class defines methods to evaluate message digest.
@@ -310,3 +313,90 @@ public extension NSData {
 
 }
 
+// MARK: HMAC
+
+/// The HMAC class
+public class HMAC {
+
+    public typealias Message = RawData
+    public typealias SecretKey = RawData
+
+    /**
+     The cryptographic algorithm types to evaluate the HMAC.
+     */
+    public enum Algorithm: UInt32 {
+        case SHA1, MD5, SHA256, SHA384, SHA512, SHA224
+
+        internal var digestLength : Int32 {
+            switch self {
+            case .MD5:
+                return CC_MD5_DIGEST_LENGTH
+            case .SHA1:
+                return CC_SHA1_DIGEST_LENGTH
+            case .SHA224:
+                return CC_SHA224_DIGEST_LENGTH
+            case .SHA256:
+                return CC_SHA256_DIGEST_LENGTH
+            case .SHA384:
+                return CC_SHA384_DIGEST_LENGTH
+            case .SHA512:
+                return CC_SHA512_DIGEST_LENGTH
+            }
+        }
+    }
+
+    private let algorithm: Algorithm
+    private let message = NSMutableData()
+    private let key: SecretKey
+
+    /**
+     Initializes a new HMAC object with the provided cryptographic algorithm.
+
+     - Parameters:
+     - algorithm: The cryptographic algorithm to use.
+
+     - Returns: A newly created object to compute the HMAC.
+     */
+    init(_ algorithm: Algorithm, key: SecretKey) {
+        self.algorithm = algorithm
+        self.key = key
+    }
+
+    /**
+     Appends specified bytes to the internal buffer. Can be called repeatedly with chunks of the message.
+
+     - parameter bytes:  The message to be hashed.
+     - parameter length: The message length.
+     */
+    public func update(message: Message) {
+        self.message.appendBytes(message.bytes, length: message.length)
+    }
+
+    /**
+     Computes the HMAC.
+
+     - returns: the message digest.
+     */
+    public func final() -> [UInt8] {
+        var hmac = [UInt8](count: Int(self.algorithm.digestLength), repeatedValue: UInt8(0))
+        CCHmac(self.algorithm.rawValue, key.bytes, key.length, self.message.bytes, self.message.length, &hmac)
+        return hmac
+    }
+
+    public static func hmac(algorithm: Algorithm, message: Message, key: SecretKey) -> [UInt8] {
+        let hmac = HMAC(algorithm, key: key)
+        hmac.update(message)
+        return hmac.final()
+    }
+
+}
+
+/// The NSData extension defines methods to compute the HMAC.
+public extension NSData {
+
+    public func HMAC(algorithm: HMAC.Algorithm, key: NSData) -> NSData {
+        let hmac = HMAC.hmac(algorithm: algorithm, message: (self.bytes, self.length), key: (key.bytes, key.length))
+        return NSData(bytes: hmac, length: hmac.count)
+    }
+
+}
