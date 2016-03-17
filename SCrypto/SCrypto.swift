@@ -34,7 +34,7 @@ public enum SCryptoError: ErrorType, RawRepresentable {
         }
     }
 
-    public var rawValue: CCCryptorStatus {
+    public var rawValue: RawValue {
         switch self {
         case ParamError : return CCCryptorStatus(kCCParamError)
         case BufferTooSmall : return CCCryptorStatus(kCCBufferTooSmall)
@@ -58,29 +58,44 @@ public final class Digest {
      MD2, MD4, and MD5 are recommended only for compatibility with existing applications.
      In new applications, SHA-256(or greater) should be preferred.
      */
-    public enum Algorithm {
+    public enum Algorithm: RawConvertable {
         case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 
-        internal var digest : (length: Int32, function: (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>) {
+        internal var digestLength: Int32 {
             switch self {
             case .MD2:
-                return (CC_MD2_DIGEST_LENGTH, CC_MD2)
+                return CC_MD2_DIGEST_LENGTH
             case .MD4:
-                return (CC_MD4_DIGEST_LENGTH, CC_MD4)
+                return CC_MD4_DIGEST_LENGTH
             case .MD5:
-                return (CC_MD5_DIGEST_LENGTH, CC_MD5)
+                return CC_MD5_DIGEST_LENGTH
             case .SHA1:
-                return (CC_SHA1_DIGEST_LENGTH, CC_SHA1)
+                return CC_SHA1_DIGEST_LENGTH
             case .SHA224:
-                return (CC_SHA224_DIGEST_LENGTH, CC_SHA224)
+                return CC_SHA224_DIGEST_LENGTH
             case .SHA256:
-                return (CC_SHA256_DIGEST_LENGTH, CC_SHA256)
+                return CC_SHA256_DIGEST_LENGTH
             case .SHA384:
-                return (CC_SHA384_DIGEST_LENGTH, CC_SHA384)
+                return CC_SHA384_DIGEST_LENGTH
             case .SHA512:
-                return (CC_SHA512_DIGEST_LENGTH, CC_SHA512)
+                return CC_SHA512_DIGEST_LENGTH
             }
         }
+
+        typealias RawValue = (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>
+        internal var rawValue: RawValue {
+            switch self {
+            case .MD2 : return CC_MD2
+            case .MD4 : return CC_MD4
+            case .MD5 : return CC_MD5
+            case .SHA1 : return CC_SHA1
+            case .SHA224: return CC_SHA224
+            case .SHA256: return CC_SHA256
+            case .SHA384: return CC_SHA384
+            case .SHA512: return CC_SHA512
+            }
+        }
+
     }
 
     private let algorithm: Algorithm
@@ -114,9 +129,9 @@ public final class Digest {
      - returns: the message digest.
      */
     public func final() -> [UInt8] {
-        var digest = [UInt8](count: Int(self.algorithm.digest.length), repeatedValue: UInt8(0))
+        var digest = [UInt8](count: Int(self.algorithm.digestLength), repeatedValue: UInt8(0))
         // the one-shot routine returns the pointer passed in via the md parameter
-        self.algorithm.digest.function(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
+        self.algorithm.rawValue(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
         return digest
     }
 
@@ -462,8 +477,8 @@ public final class Cryptor {
     public enum Algorithm: RawConvertable {
         case AES, DES, TripleDES, CAST, RC2, RC4, Blowfish
 
-        typealias RawValueType = CCAlgorithm
-        internal var rawValue: CCAlgorithm {
+        typealias RawValue = CCAlgorithm
+        internal var rawValue: RawValue {
             switch self {
             case AES : return CCAlgorithm(kCCAlgorithmAES)
             case DES : return CCAlgorithm(kCCAlgorithmDES)
@@ -475,39 +490,105 @@ public final class Cryptor {
             }
         }
 
+        /// Block sizes, in bytes, for supported algorithms.
+        public var blockSize: Int {
+            switch self {
+            case AES : return kCCBlockSizeAES128
+            case DES : return kCCBlockSizeDES
+            case TripleDES : return kCCBlockSize3DES
+            case CAST : return kCCBlockSizeCAST
+            case RC2: return kCCBlockSizeRC2
+            case RC4: return 0
+            case Blowfish : return kCCBlockSizeBlowfish
+            }
+        }
     }
 
-    public enum Operation: UInt32 {
-        case Encrypt, Dencrypt
+    public enum Operation: RawConvertable {
+        case Encrypt, Decrypt
+
+        typealias RawValue = CCOperation
+        internal var rawValue: RawValue {
+            switch self {
+            case Encrypt : return CCOperation(kCCEncrypt)
+            case Decrypt : return CCOperation(kCCDecrypt)
+            }
+        }
     }
+
+    /**
+     *  Options for block ciphers
+     */
+    public struct Options : OptionSetType {
+        public typealias RawValue = CCOptions
+        public let rawValue: RawValue
+
+        public init(rawValue: RawValue) {
+            self.rawValue = rawValue
+        }
+
+        /// The PKCS7 padding.
+        public static let PKCS7Padding =  Options(rawValue: RawValue(kCCOptionPKCS7Padding))
+        /// Electronic Code Book Mode. Default is CBC.
+        public static let ECBMode = Options(rawValue: RawValue(kCCOptionECBMode))
+    }
+
 
     private let algorithm: Algorithm
+    private let options: Options
+    private let iv: IV
 
-    init(algorithm: Algorithm) {
+    init(algorithm: Algorithm, options: Options, iv: IV = (nil, 0)) {
         self.algorithm = algorithm
+        self.options = options
+        self.iv = iv
     }
 
-    public func crypt(data: Data, key: Key, iv: IV, operation: Operation) -> [UInt8]? {
-        var outLength: size_t = 0
-        var dataOut = [UInt8](count: Int(data.length + kCCBlockSizeAES128), repeatedValue: UInt8(0))
+    public func encrypt(data: Data, key: Key) throws -> [UInt8] {
+        return try cryptoOperation(data, key: key, operation: .Encrypt)
+    }
 
-        // http://stackoverflow.com/questions/25754147/issue-using-cccrypt-commoncrypt-in-swift
-        let result = CCCrypt(operation.rawValue, // operation
-            self.algorithm.rawValue, // Algorithm
-            UInt32(kCCOptionPKCS7Padding), // options
+    public func decrypt(data: Data, key: Key) throws -> [UInt8] {
+        return try cryptoOperation(data, key: key, operation: .Decrypt)
+    }
+
+    private func cryptoOperation(data: Data, key: Key, operation: Operation) throws -> [UInt8] {
+        var dataOutMoved = 0
+        var outData = [UInt8](count: Int(data.length + self.algorithm.blockSize), repeatedValue: UInt8(0))
+
+        let status = CCCrypt(operation.rawValue, // operation
+            self.algorithm.rawValue, // algorithm
+            self.options.rawValue, // options
             key.bytes, // key
             key.length, // keylength
-            iv.bytes, // iv
-            data.bytes, // dataIn
-            data.length, // dataInLength,
-            &dataOut, // dataOut
-            dataOut.count, // dataOutAvailable
-            &outLength) // dataOutMoved
-        if result == Int32(kCCSuccess) {
-            return Array(dataOut[0..<Int(outLength)])
+            self.iv.bytes, // iv
+            data.bytes, // input data
+            data.length, // input length
+            &outData, // output buffer
+            outData.count, // output buffer length
+            &dataOutMoved) // output bytes real length
+        if status == CCCryptorStatus(kCCSuccess) {
+            return Array(outData[0..<dataOutMoved])
         } else {
-            return nil
+            throw SCryptoError(rawValue: status)!
         }
+    }
+
+}
+
+/// The NSData extension defines methods for symmetric encryption algorithms.
+public extension NSData {
+
+    public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
+        let cryptor = Cryptor(algorithm: algorithm, options: options)
+        let encryptedBytes = try cryptor.encrypt((self.bytes, self.length), key: (key.bytes, key.length))
+        return NSData(bytes: encryptedBytes, length: encryptedBytes.count)
+    }
+
+    public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
+        let cryptor = Cryptor(algorithm: algorithm, options: options)
+        let decryptedBytes = try cryptor.decrypt((self.bytes, self.length), key: (key.bytes, key.length))
+        return NSData(bytes: decryptedBytes, length: decryptedBytes.count)
     }
 
 }
