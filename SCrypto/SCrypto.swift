@@ -592,3 +592,49 @@ public extension NSData {
     }
 
 }
+
+// MARK: PBKDF
+
+public class PBKDF {
+
+    public typealias Password = (bytes: UnsafePointer<Int8>, length: Int)
+    public typealias Salt = (bytes: UnsafePointer<UInt8>, length: Int)
+    public typealias DerivedKey = [UInt8]
+    public typealias Rounds = uint
+
+    /**
+     The Pseudo Random Algorithm to use for the derivation iterations.
+     */
+    public enum Algorithm: RawConvertable {
+        case SHA1, SHA224, SHA256, SHA384, SHA512
+
+        typealias RawValue = CCPseudoRandomAlgorithm
+        internal var rawValue: RawValue {
+            switch self {
+            case SHA1 : return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA1)
+            case SHA224 : return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA224)
+            case SHA256 : return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256)
+            case SHA384 : return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA384)
+            case SHA512: return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA512)
+            }
+        }
+    }
+
+    public func derivedKey(length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: Algorithm, rounds: Rounds) throws -> DerivedKey {
+        var derivedKey = DerivedKey(count: length, repeatedValue: UInt8(0))
+        let statusCode = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
+            password.bytes,
+            password.length,
+            salt.bytes,
+            salt.length,
+            pseudoRandomAlgorithm.rawValue,
+            rounds,
+            &derivedKey,
+            derivedKey.count)
+        if statusCode != CCRNGStatus(kCCSuccess) {
+            throw SCryptoError(rawValue: statusCode)!
+        }
+        return derivedKey
+    }
+}
+
