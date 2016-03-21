@@ -16,9 +16,20 @@ internal protocol RawConvertable {
     var rawValue: RawValue { get }
 }
 
-/// The error values for SCrypto operations
-public enum SCryptoError: ErrorType, RawRepresentable {
-    case ParamError, BufferTooSmall, MemoryFailure, AlignmentError, DecodeError, Unimplemented
+/**
+    The error values for SCrypto operations
+
+    - ParamError: Illegal parameter value.
+    - BufferTooSmall: Insufficent buffer provided for specified operation.
+    - MemoryFailure: Memory allocation failure.
+    - AlignmentError: Input size was not aligned properly.
+    - DecodeError: Input data did not decode or decrypt properly.
+    - Unimplemented: Function not implemented for the current algorithm.
+    - Overflow: Overflow error.
+    - RNGFailure: Random Number Generator Error.
+*/
+public enum SCryptoError: ErrorType, RawRepresentable, CustomStringConvertible {
+    case ParamError, BufferTooSmall, MemoryFailure, AlignmentError, DecodeError, Unimplemented, Overflow, RNGFailure
 
     public typealias RawValue = CCCryptorStatus
 
@@ -30,6 +41,8 @@ public enum SCryptoError: ErrorType, RawRepresentable {
         case kCCAlignmentError: self = .AlignmentError
         case kCCDecodeError: self = .DecodeError
         case kCCUnimplemented : self = .Unimplemented
+        case kCCOverflow: self = .Overflow
+        case kCCRNGFailure: self = .RNGFailure
         default: return nil
         }
     }
@@ -42,14 +55,24 @@ public enum SCryptoError: ErrorType, RawRepresentable {
         case AlignmentError: return CCCryptorStatus(kCCAlignmentError)
         case DecodeError: return CCCryptorStatus(kCCDecodeError)
         case Unimplemented : return CCCryptorStatus(kCCUnimplemented)
+        case Overflow: return CCCryptorStatus(kCCOverflow)
+        case RNGFailure: return CCCryptorStatus(kCCRNGFailure)
         }
+    }
+
+    /// The error's textual representation
+    public var description: String {
+        let descriptions = [ParamError: "ParamError", BufferTooSmall: "BufferTooSmall", MemoryFailure: "MemoryFailure",
+            AlignmentError: "AlignmentError", DecodeError: "DecodeError", Unimplemented: "Unimplemented", Overflow: "Overflow",
+            RNGFailure: "RNGFailure"]
+        return descriptions[self] ?? ""
     }
 
 }
 
 // MARK: Message Digest
 
-/// The Digest class defines methods to evaluate message digest.
+/// The `Digest` class defines methods to evaluate message digest.
 public final class Digest {
 
     /**
@@ -242,7 +265,7 @@ public final class Digest {
 
 }
 
-/// The NSData extension defines methods to compute the message digest.
+/// The `NSData` extension defines methods to compute the message digest.
 public extension NSData {
 
     /**
@@ -595,17 +618,19 @@ public extension NSData {
 
 // MARK: PBKDF
 
-public class PBKDF {
+/// The `PBKDF` class defines methods to derive a key from a text password/passphrase.
+public final class PBKDF {
 
     public typealias Password = (bytes: UnsafePointer<Int8>, length: Int)
     public typealias Salt = (bytes: UnsafePointer<UInt8>, length: Int)
     public typealias DerivedKey = [UInt8]
     public typealias Rounds = uint
+    private static let algorithm = CCPBKDFAlgorithm(kCCPBKDF2) // Currently only PBKDF2 is available via kCCPBKDF2
 
     /**
      The Pseudo Random Algorithm to use for the derivation iterations.
      */
-    public enum Algorithm: RawConvertable {
+    public enum PseudoRandomAlgorithm: RawConvertable {
         case SHA1, SHA224, SHA256, SHA384, SHA512
 
         typealias RawValue = CCPseudoRandomAlgorithm
@@ -620,9 +645,22 @@ public class PBKDF {
         }
     }
 
-    public func derivedKey(length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: Algorithm, rounds: Rounds) throws -> DerivedKey {
+    /**
+     Derive a key from a text password/passphrase.
+
+     - parameter length:                The expected length of the derived key in bytes.
+     - parameter password:              The text password used as input to the derivation function.
+     - parameter salt:                  The salt byte values used as input to the derivation function.
+     - parameter pseudoRandomAlgorithm: he Pseudo Random Algorithm to use for the derivation iterations.
+     - parameter rounds:                he number of rounds of the Pseudo Random Algorithm to use.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: The resulting derived key.
+     */
+    public static func derivedKey(withLength length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: PseudoRandomAlgorithm, rounds: Rounds) throws -> DerivedKey {
         var derivedKey = DerivedKey(count: length, repeatedValue: UInt8(0))
-        let statusCode = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
+        let statusCode = CCKeyDerivationPBKDF(self.algorithm,
             password.bytes,
             password.length,
             salt.bytes,
@@ -636,5 +674,35 @@ public class PBKDF {
         }
         return derivedKey
     }
+
+    /*
+    Determine the approximate number of PRF rounds to use for a specific delay on the current platform.
+
+    - parameter passwordLength:   The length of the text password in bytes.
+    - parameter saltLength:       The length of the salt in bytes.
+    - parameter pseudoRandomAlgorithm: The Pseudo Random Algorithm to use for the derivation iterations.
+    - parameter derivedKeyLength:      The expected length of the derived key in bytes.
+    - parameter msec:                  The targetted duration we want to achieve for a key derivation with these parameters.
+
+    - returns: the number of iterations to use for the desired processing time.
+    */
+    public static func calibrate(passwordLength: Int, saltLength: Int, pseudoRandomAlgorithm: PseudoRandomAlgorithm, derivedKeyLength: Int, msec : UInt32) -> UInt
+    {
+        return UInt(CCCalibratePBKDF(CCPBKDFAlgorithm(kCCPBKDF2), passwordLength, saltLength, pseudoRandomAlgorithm.rawValue, derivedKeyLength, msec))
+    }
 }
 
+
+/// The NSData extension defines methods for deriving a key from a text password/passphrase.
+public extension NSData {
+
+    public func derivedKey(salt: NSData, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: PBKDF.Rounds, derivedKeyLength: Int) throws -> NSData {
+        let key = try PBKDF.derivedKey(withLength: derivedKeyLength, password: (UnsafePointer(self.bytes), self.length), salt: (UnsafePointer(salt.bytes), salt.length), pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds)
+        return NSData(bytes: key, length: key.count)
+    }
+
+    public func calibrate(saltLength: Int, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, derivedKeyLength: Int, msec : UInt32) -> UInt {
+        return PBKDF.calibrate(self.length, saltLength: saltLength, pseudoRandomAlgorithm: pseudoRandomAlgorithm, derivedKeyLength: derivedKeyLength, msec: msec)
+    }
+
+}

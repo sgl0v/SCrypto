@@ -401,6 +401,10 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
 			};
 			name = Debug;
 		};
@@ -420,6 +424,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+				);
 			};
 			name = Release;
 		};
