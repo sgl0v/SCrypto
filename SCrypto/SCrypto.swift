@@ -8,8 +8,15 @@
 
 import CommonCrypto
 
-/// The tuple with raw bytes and its length
-public typealias RawData = (bytes: UnsafePointer<Void>, length: Int)
+public extension NSData {
+
+    func bytesArray<T: IntegerLiteralConvertible>() -> [T] {
+        var bytes = Array<T>(count: self.length, repeatedValue: 0)
+        self.getBytes(&bytes, length:self.length * sizeof(T))
+        return bytes
+    }
+
+}
 
 internal protocol RawConvertable {
     typealias RawValue
@@ -140,10 +147,9 @@ public final class Digest {
      Appends specified bytes to the internal buffer. Can be called repeatedly with chunks of the message to be hashed.
 
      - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
      */
-    public func update(bytes: UnsafePointer<Void>, length: Int) {
-        self.data.appendBytes(bytes, length: length)
+    public func update(bytes: [UInt8]) {
+        self.data.appendBytes(bytes, length: bytes.count)
     }
 
     /**
@@ -158,111 +164,6 @@ public final class Digest {
         return digest
     }
 
-     /**
-     Computes the MD2 message digest at data and returns the result.
-     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the MD2 message digest.
-     */
-    public static func MD2(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.MD2, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the MD4 message digest at data and returns the result.
-     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the MD4 message digest.
-     */
-    public static func MD4(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.MD4, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the MD5 message digest at data and returns the result.
-     Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the MD5 message digest.
-     */
-    public static func MD5(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.MD5, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the SHA1 message digest at data and returns the result.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the SHA1 message digest.
-     */
-    public static func SHA1(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.SHA1, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the SHA224 message digest at data and returns the result.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the SHA224 message digest.
-     */
-    public static func SHA224(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.SHA224, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the SHA256 message digest at data and returns the result.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the SHA256 message digest.
-     */
-    public static func SHA256(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.SHA256, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the SHA384 message digest at data and returns the result.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the SHA384 message digest.
-     */
-    public static func SHA384(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.SHA384, bytes: bytes, length: length)
-    }
-
-    /**
-     Computes the SHA512 message digest at data and returns the result.
-
-     - parameter bytes:  The message to be hashed.
-     - parameter length: The message length.
-
-     - returns: the SHA512 message digest.
-     */
-    public static func SHA512(bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        return digest(.SHA512, bytes: bytes, length: length)
-    }
-
-    private static func digest(algorithm: Algorithm, bytes: UnsafePointer<Void>, length: Int) -> [UInt8] {
-        let digest = Digest(algorithm)
-        digest.update(bytes, length: length)
-        return digest.final()
-    }
-
 }
 
 /// The `NSData` extension defines methods to compute the message digest.
@@ -275,7 +176,7 @@ public extension NSData {
      - returns: the MD2 message digest.
      */
     public func MD2() -> NSData {
-        return digest(Digest.MD2)
+        return digest(.MD2)
     }
 
     /**
@@ -285,7 +186,7 @@ public extension NSData {
      - returns: the MD4 message digest.
      */
     public func MD4() -> NSData {
-        return digest(Digest.MD4)
+        return digest(.MD4)
     }
 
     /**
@@ -295,7 +196,7 @@ public extension NSData {
      - returns: the MD5 message digest.
      */
     public func MD5() -> NSData {
-        return digest(Digest.MD5)
+        return digest(.MD5)
     }
 
     /**
@@ -304,7 +205,7 @@ public extension NSData {
      - returns: the SHA-1 message digest.
      */
     public func SHA1() -> NSData {
-        return digest(Digest.SHA1)
+        return digest(.SHA1)
     }
 
     /**
@@ -313,7 +214,7 @@ public extension NSData {
      - returns: the SHA224 message digest.
      */
     public func SHA224() -> NSData {
-        return digest(Digest.SHA224)
+        return digest(.SHA224)
     }
 
     /**
@@ -322,7 +223,7 @@ public extension NSData {
      - returns: the SHA256 message digest.
      */
     public func SHA256() -> NSData {
-        return digest(Digest.SHA256)
+        return digest(.SHA256)
     }
 
     /**
@@ -331,7 +232,7 @@ public extension NSData {
      - returns: the SHA384 message digest.
      */
     public func SHA384() -> NSData {
-        return digest(Digest.SHA384)
+        return digest(.SHA384)
     }
 
     /**
@@ -340,12 +241,14 @@ public extension NSData {
      - returns: the SHA512 message digest.
      */
     public func SHA512() -> NSData {
-        return digest(Digest.SHA512)
+        return digest(.SHA512)
     }
 
-    private func digest(digestFunc: (bytes: UnsafePointer<Void>, length: Int) -> [UInt8]) -> NSData {
-        let digest = digestFunc(bytes: self.bytes, length: self.length)
-        return NSData(bytes: digest, length: digest.count)
+    private func digest(algorithm: Digest.Algorithm) -> NSData {
+        let digest = Digest(algorithm)
+        digest.update(self.bytesArray())
+        let messageDigest = digest.final()
+        return NSData(bytes: messageDigest, length: messageDigest.count)
     }
 
 }
@@ -397,8 +300,8 @@ public extension NSData {
 /// The HMAC class
 public final class HMAC {
 
-    public typealias Message = RawData
-    public typealias SecretKey = RawData
+    public typealias Message = [UInt8]
+    public typealias SecretKey = [UInt8]
 
     /**
      Cryptographic hash functions, that may be used in the calculation of an HMAC.
@@ -459,7 +362,7 @@ public final class HMAC {
      - parameter message: The message to be authenticated.
      */
     public func update(message: Message) {
-        self.message.appendBytes(message.bytes, length: message.length)
+        self.message.appendBytes(message, length: message.count)
     }
 
     /**
@@ -469,7 +372,7 @@ public final class HMAC {
      */
     public func final() -> [UInt8] {
         var hmac = [UInt8](count: Int(self.algorithm.digestLength), repeatedValue: UInt8(0))
-        CCHmac(self.algorithm.rawValue, key.bytes, key.length, self.message.bytes, self.message.length, &hmac)
+        CCHmac(self.algorithm.rawValue, key, key.count, self.message.bytes, self.message.length, &hmac)
         return hmac
     }
 
@@ -487,8 +390,8 @@ public extension NSData {
      - returns:  the message authentication code.
      */
     public func hmac(algorithm: HMAC.Algorithm, key: NSData) -> NSData {
-        let hmac = HMAC(algorithm, key: (key.bytes, key.length))
-        hmac.update((self.bytes, self.length))
+        let hmac = HMAC(algorithm, key: key.bytesArray())
+        hmac.update(self.bytesArray())
         let result = hmac.final()
         return NSData(bytes: result, length: result.count)
     }
@@ -500,9 +403,9 @@ public extension NSData {
 /// The Cryptor class provides access to a number of symmetric encryption algorithms (stream and block ones).
 public final class Cryptor {
 
-    public typealias Data = RawData
-    public typealias Key = RawData
-    public typealias IV = RawData
+    public typealias Data = [UInt8]
+    public typealias Key = [UInt8]
+    public typealias IV = [UInt8]
 
     /**
      The encryption algorithms that are supported by the Cryptor.
@@ -569,7 +472,7 @@ public final class Cryptor {
 
     private let algorithm: Algorithm
     private let options: Options
-    private let iv: IV
+    private let iv: IV?
 
     /**
      Initializes a new cryptor with the provided algorithm and options.
@@ -578,11 +481,11 @@ public final class Cryptor {
      - parameter options:   The encryption options.
      - parameter iv:        Initialization vector, optional. Used by block ciphers when Cipher Block Chaining (CBC) mode is enabled.
      If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or
-     if a stream cipher algorithm is selected.
+     if a stream cipher algorithm is selected. nil by default.
      
      - returns: A newly created and initialized cryptor object.
      */
-    init(algorithm: Algorithm, options: Options, iv: IV = (nil, 0)) {
+    init(algorithm: Algorithm, options: Options, iv: IV? = nil) {
         self.algorithm = algorithm
         self.options = options
         self.iv = iv
@@ -618,16 +521,16 @@ public final class Cryptor {
 
     private func cryptoOperation(data: Data, key: Key, operation: Operation) throws -> [UInt8] {
         var dataOutMoved = 0
-        var outData = [UInt8](count: Int(data.length + self.algorithm.blockSize), repeatedValue: UInt8(0))
-
+        var outData = [UInt8](count: Int(data.count + self.algorithm.blockSize), repeatedValue: UInt8(0))
+        let ivData = self.iv == nil ? nil : UnsafePointer<Void>(self.iv!)
         let status = CCCrypt(operation.rawValue, // operation
             self.algorithm.rawValue, // algorithm
             self.options.rawValue, // options
-            key.bytes, // key
-            key.length, // keylength
-            self.iv.bytes, // iv
-            data.bytes, // input data
-            data.length, // input length
+            key, // key
+            key.count, // keylength
+            ivData, // iv
+            data, // input data
+            data.count, // input length
             &outData, // output buffer
             outData.count, // output buffer length
             &dataOutMoved) // output bytes real length
@@ -644,14 +547,14 @@ public final class Cryptor {
 public extension NSData {
 
     public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
-        let cryptor = Cryptor(algorithm: algorithm, options: options)
-        let encryptedBytes = try cryptor.encrypt((self.bytes, self.length), key: (key.bytes, key.length))
+        let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
+        let encryptedBytes = try cryptor.encrypt(self.bytesArray(), key: key.bytesArray())
         return NSData(bytes: encryptedBytes, length: encryptedBytes.count)
     }
 
     public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
-        let cryptor = Cryptor(algorithm: algorithm, options: options)
-        let decryptedBytes = try cryptor.decrypt((self.bytes, self.length), key: (key.bytes, key.length))
+        let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
+        let decryptedBytes = try cryptor.decrypt(self.bytesArray(), key: key.bytesArray())
         return NSData(bytes: decryptedBytes, length: decryptedBytes.count)
     }
 
@@ -662,8 +565,8 @@ public extension NSData {
 /// The `PBKDF` class defines methods to derive a key from a text password/passphrase.
 public final class PBKDF {
 
-    public typealias Password = (bytes: UnsafePointer<Int8>, length: Int)
-    public typealias Salt = (bytes: UnsafePointer<UInt8>, length: Int)
+    public typealias Password = [Int8]
+    public typealias Salt = [UInt8]
     public typealias DerivedKey = [UInt8]
     public typealias Rounds = uint
     private static let algorithm = CCPBKDFAlgorithm(kCCPBKDF2) // Currently only PBKDF2 is available via kCCPBKDF2
@@ -702,10 +605,10 @@ public final class PBKDF {
     public static func derivedKey(withLength length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: PseudoRandomAlgorithm, rounds: Rounds) throws -> DerivedKey {
         var derivedKey = DerivedKey(count: length, repeatedValue: UInt8(0))
         let statusCode = CCKeyDerivationPBKDF(self.algorithm,
-            password.bytes,
-            password.length,
-            salt.bytes,
-            salt.length,
+            password,
+            password.count,
+            salt,
+            salt.count,
             pseudoRandomAlgorithm.rawValue,
             rounds,
             &derivedKey,
@@ -738,7 +641,7 @@ public final class PBKDF {
 public extension NSData {
 
     public func derivedKey(salt: NSData, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: PBKDF.Rounds, derivedKeyLength: Int) throws -> NSData {
-        let key = try PBKDF.derivedKey(withLength: derivedKeyLength, password: (UnsafePointer(self.bytes), self.length), salt: (UnsafePointer(salt.bytes), salt.length), pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds)
+        let key = try PBKDF.derivedKey(withLength: derivedKeyLength, password: self.bytesArray(), salt: salt.bytesArray(), pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds)
         return NSData(bytes: key, length: key.count)
     }
 
