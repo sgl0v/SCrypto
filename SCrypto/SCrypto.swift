@@ -568,7 +568,6 @@ public final class PBKDF {
     public typealias Password = [Int8]
     public typealias Salt = [UInt8]
     public typealias DerivedKey = [UInt8]
-    public typealias Rounds = uint
     private static let algorithm = CCPBKDFAlgorithm(kCCPBKDF2) // Currently only PBKDF2 is available via kCCPBKDF2
 
     /**
@@ -602,7 +601,7 @@ public final class PBKDF {
 
      - returns: The resulting derived key.
      */
-    public static func derivedKey(withLength length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: PseudoRandomAlgorithm, rounds: Rounds) throws -> DerivedKey {
+    public static func derivedKey(withLength length: Int, password: Password, salt: Salt, pseudoRandomAlgorithm: PseudoRandomAlgorithm, rounds: UInt32) throws -> DerivedKey {
         var derivedKey = DerivedKey(count: length, repeatedValue: UInt8(0))
         let statusCode = CCKeyDerivationPBKDF(self.algorithm,
             password,
@@ -640,7 +639,7 @@ public final class PBKDF {
 /// The NSData extension defines methods for deriving a key from a text password/passphrase.
 public extension NSData {
 
-    public func derivedKey(salt: NSData, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: PBKDF.Rounds, derivedKeyLength: Int) throws -> NSData {
+    public func derivedKey(salt: NSData, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: UInt32, derivedKeyLength: Int) throws -> NSData {
         let key = try PBKDF.derivedKey(withLength: derivedKeyLength, password: self.bytesArray(), salt: salt.bytesArray(), pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds)
         return NSData(bytes: key, length: key.count)
     }

@@ -41,16 +41,23 @@ class SCryptoTests: XCTestCase {
         static let hmacSHA384 = "d7f4727e2c0b39ae0f1e40cc96f60242d5b7801841cea6fc592c5d3e1ae50700582a96cf35e1e554995fe4e03381c237"
         static let hmacSHA512 = "b42af09057bac1e2d41708e48a902e09b5ff7f12ab428a4fe86653c73dd248fb82f948a549f7b791a5b41915ee4d1ec3935357e4e2317250d0372afa2ebeeb3a"
         static let hmacSHA224 = "88ff8b54675d39b8f72322e65ff945c52d96379988ada25639747e69"
-    }
 
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+        static let pbkdfSalt = "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12"
+        static let pbkdfSHA1 = "70f0bf06e5fb0972e8cf89e3d03c25ca"
+        static let pbkdfSHA256 = "80420b8832af8a5111901f1a7b46aeeae719badbedf9bf69249efc5dbe09c9b1"
+        static let pbkdfSHA512 = "84efb05ae06660f2b6f7bbb1e0cf5da539fc04cb2ae6171bb6b8b48854d2055afd2346f0eba86076ce237e862ddb0cd28dfdb82c18f570206ae8cf4d1e48284d"
+
+        static let aesPlaintext = "cUeHxclgAgRNxETQfukCh6XoATh5Swi/OmNW97Sdz49fnw8BGMREZmginSD1pDbG58AjvEvPF0n5Jop8PiLrVA=="
+        static let aesIV_128 = "96s40AnfurPVbdo/JNUmvQ=="
+        static let aesIV_256 = "uw7aQlOL3Wndbz/Nogs9+osF6FskVsukS0EnqOzWCNE="
+        static let aesKey_128 = "0cd2/U7XFvIce+Mm+vX8Yw=="
+        static let aesKey_256 = "XhrsgcHsNo6c170hQ2GY5jI3uMA+A6y724nxJ1vCZ7o="
+        static let aesCiphertext_CBC_128_Padding = "rJT3N1XTd6zfUSrnnfj2OuPhbkzbpWbH7qT0KToXJbd6CdAh13s3jPBksPQ0QtS/"
+        static let aesCiphertext_CBC_256_Padding = "4UYbAgd7ZhjdCKtPubBdeRlVbjb5PZeG0EIPdRxNedD+z8ItF12THTTcILliYi+p"
+        static let aesCiphertext_CBC_128 = "Y45fkXZe4KifkzAqaB7VW1MEqTnxVY3GtAt/OBTTQq984uyWQk58JulbA/YfW1duVvKTrOzcE+DLt2X8UwS1KA=="
+        static let aesCiphertext_CBC_256 = "JOpLDp1r2SkHWhlaWmDUdSqJ7T/185Dpa41g7Hv8wXg6gzJNAfGdodk48ganQ3bNIcG3wamflgO4YPHl8na6cg=="
+        static let aesCiphertext_CBC_128_IV = "/zxZ2j1AE4MgKkf8k+UFT0RzNM6F3Yu8L+8dT1ppzYu64MAF9ZA0pkqCdER1h4RqTeYg5oOkEVo3PvdONwI5Bw=="
+        static let aesCiphertext_CBC_256_IV = "O49HzhxdRYMgzqQYx+pECj98Mxn+EtFy7ZnBE9yr+fPZXwgzWaLnLasoKszifIlHRnY3W0ehdWT2Zysaguorcw=="
     }
 
     // MARK: Digest
@@ -131,6 +138,52 @@ class SCryptoTests: XCTestCase {
         let message = message.dataUsingEncoding(NSUTF8StringEncoding)!
         let hmac = message.hmac(algorithm, key: key).hexString()
         XCTAssertEqual(hmac, expectedHMAC)
+    }
+
+    // MARK: PBKDF
+
+    func testDerivedKey_SHA1() {
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA1, rounds: 20, derivedKeyLength: 16, expectedDerivedKey: Consts.pbkdfSHA1)
+    }
+
+    func testDerivedKey_SHA256() {
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 32, expectedDerivedKey: Consts.pbkdfSHA256)
+    }
+
+    func testDerivedKey_SHA512() {
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA512, rounds: 20, derivedKeyLength: 64, expectedDerivedKey: Consts.pbkdfSHA512)
+    }
+
+    private func PBKDF2(password: String, salt: String, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: UInt32, derivedKeyLength: Int, expectedDerivedKey: String) {
+        let password = password.dataUsingEncoding(NSUTF8StringEncoding)!
+        let salt = salt.dataUsingEncoding(NSUTF8StringEncoding)!
+        let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds, derivedKeyLength: derivedKeyLength)
+        XCTAssertEqual(derivedKey.length, derivedKeyLength)
+        XCTAssertEqual(derivedKey.hexString(), expectedDerivedKey)
+    }
+
+    // MARK: Cryptor
+
+    func testAES_CBC_128() {
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128, algorithm: .AES, options: [])
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: Consts.aesIV_128, expectedCyphertext: Consts.aesCiphertext_CBC_128_IV, algorithm: .AES, options: [])
+        cipher(Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions([]), key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128_Padding, algorithm: .AES, options: .PKCS7Padding)
+    }
+
+    func testAES_CBC_256() {
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256, algorithm: .AES, options: [])
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: Consts.aesIV_256, expectedCyphertext: Consts.aesCiphertext_CBC_256_IV, algorithm: .AES, options: [])
+        cipher(Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions([]), key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256_Padding, algorithm: .AES, options: .PKCS7Padding)
+    }
+
+    func cipher(plaintext: String, key: String, IV: String?, expectedCyphertext: String, algorithm: Cryptor.Algorithm, options: Cryptor.Options) {
+        let plaintext = NSData(base64EncodedString: plaintext, options: [])!
+        let aesKey = NSData(base64EncodedString: key, options: [])!
+        let IV = IV == nil ? nil : NSData(base64EncodedString: IV!, options: [])
+        let ciphertext = try! plaintext.encrypt(algorithm, options: options, key: aesKey, iv: IV)
+        let plaintext2 = try! ciphertext.decrypt(algorithm, options: options, key: aesKey, iv: IV)
+        XCTAssertEqual(plaintext, plaintext2)
+        XCTAssertEqual(ciphertext.base64EncodedStringWithOptions([]), expectedCyphertext)
     }
 
 }
