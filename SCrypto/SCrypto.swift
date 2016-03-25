@@ -546,12 +546,36 @@ public final class Cryptor {
 /// The NSData extension defines methods for symmetric encryption algorithms.
 public extension NSData {
 
+    /**
+     Encrypts the plaintext.
+
+     - parameter algorithm: The symmetric algorithm to use for encryption
+     - parameter options:   The encryption options.
+     - parameter key:  The shared secret key.
+     - parameter iv:        Initialization vector, optional.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: Encrypted data.
+     */
     public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
         let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
         let encryptedBytes = try cryptor.encrypt(self.bytesArray(), key: key.bytesArray())
         return NSData(bytes: encryptedBytes, length: encryptedBytes.count)
     }
 
+    /**
+     Decrypts the ciphertext.
+
+     - parameter algorithm: The symmetric algorithm to use for encryption
+     - parameter options:   The encryption options.
+     - parameter key:  The shared secret key.
+     - parameter iv:        Initialization vector, optional.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: Decrypted data.
+     */
     public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
         let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
         let decryptedBytes = try cryptor.decrypt(self.bytesArray(), key: key.bytesArray())
@@ -594,8 +618,8 @@ public final class PBKDF {
      - parameter length:                The expected length of the derived key in bytes.
      - parameter password:              The text password used as input to the derivation function.
      - parameter salt:                  The salt byte values used as input to the derivation function.
-     - parameter pseudoRandomAlgorithm: he Pseudo Random Algorithm to use for the derivation iterations.
-     - parameter rounds:                he number of rounds of the Pseudo Random Algorithm to use.
+     - parameter pseudoRandomAlgorithm: The Pseudo Random Algorithm to use for the derivation iterations.
+     - parameter rounds:                The number of rounds of the Pseudo Random Algorithm to use.
 
      - throws: `SCryptoError` instance in case of eny errors.
 
@@ -618,11 +642,11 @@ public final class PBKDF {
         return derivedKey
     }
 
-    /*
+    /**
     Determine the approximate number of PRF rounds to use for a specific delay on the current platform.
 
-    - parameter passwordLength:   The length of the text password in bytes.
-    - parameter saltLength:       The length of the salt in bytes.
+    - parameter passwordLength:        The length of the text password in bytes.
+    - parameter saltLength:            The length of the salt in bytes.
     - parameter pseudoRandomAlgorithm: The Pseudo Random Algorithm to use for the derivation iterations.
     - parameter derivedKeyLength:      The expected length of the derived key in bytes.
     - parameter msec:                  The targetted duration we want to achieve for a key derivation with these parameters.
@@ -639,11 +663,33 @@ public final class PBKDF {
 /// The NSData extension defines methods for deriving a key from a text password/passphrase.
 public extension NSData {
 
+    /**
+     Derive a key from a text password/passphrase.
+
+     - parameter salt:                  The salt byte values used as input to the derivation function.
+     - parameter pseudoRandomAlgorithm: The Pseudo Random Algorithm to use for the derivation iterations.
+     - parameter rounds:                he number of rounds of the Pseudo Random Algorithm to use.
+     - parameter derivedKeyLength:      The expected length of the derived key in bytes.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: The resulting derived key.
+     */
     public func derivedKey(salt: NSData, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: UInt32, derivedKeyLength: Int) throws -> NSData {
         let key = try PBKDF.derivedKey(withLength: derivedKeyLength, password: self.bytesArray(), salt: salt.bytesArray(), pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds)
         return NSData(bytes: key, length: key.count)
     }
 
+    /**
+    Determine the approximate number of PRF rounds to use for a specific delay on the current platform.
+
+    - parameter saltLength:            The length of the salt in bytes.
+    - parameter pseudoRandomAlgorithm: The Pseudo Random Algorithm to use for the derivation iterations.
+    - parameter derivedKeyLength:      The expected length of the derived key in bytes.
+    - parameter msec:                  The targetted duration we want to achieve for a key derivation with these parameters.
+
+    - returns: the number of iterations to use for the desired processing time.
+    */
     public func calibrate(saltLength: Int, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, derivedKeyLength: Int, msec : UInt32) -> UInt {
         return PBKDF.calibrate(self.length, saltLength: saltLength, pseudoRandomAlgorithm: pseudoRandomAlgorithm, derivedKeyLength: derivedKeyLength, msec: msec)
     }
