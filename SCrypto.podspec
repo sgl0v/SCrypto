@@ -12,28 +12,29 @@ Pod::Spec.new do |spec|
   spec.source = { git: "https://github.com/sgl0v/SCrypto.git", tag: "v#{spec.version}", submodules: true }
   spec.source_files = "SCrypto/**/*.{h,swift}"
 
+  # Create module.map files for CommonCrypto framework
+  spec.preserve_paths = "Frameworks"
   spec.prepare_command = <<-CMD
-    SDKS=( iphoneos iphonesimulator macosx watchsimulator appletvsimulator)
-    for sdk in "${SDKS[@]}"
-    do
-      SDKPATH=$(eval "xcrun -sdk ${sdk} -show-sdk-path")
-      mkdir -p "${SDKPATH}/Frameworks/CommonCrypto.framework"
-
-      printf "module CommonCrypto [system] {\n\
-      header \"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\"\n\
-      header \"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\"\n\
-      export *\n\
-      }" > "${SDKPATH}/System/Library/Frameworks/CommonCrypto.framework/module.map"
-    done
+  BASE_DIR=$(exec pwd)
+  echo "BASE_DIR: ${BASE_DIR}"
+  SDKS=( iphoneos iphonesimulator macosx watchsimulator appletvsimulator)
+  for SDK in "${SDKS[@]}"
+  do
+    MODULE_DIR="${BASE_DIR}/Frameworks/${SDK}/CommonCrypto.framework"
+    mkdir -p "${MODULE_DIR}"
+    printf "module CommonCrypto [system] {\n\
+    header \"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\"\n\
+    header \"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\"\n\
+    export *\n\
+    }" > "${MODULE_DIR}/module.map"
+    echo "Created module map for ${SDK}."
+  done
   CMD
 
-  # Stop CocoaPods from deleting dummy frameworks
-  spec.preserve_paths = "Frameworks"
-
-  # Make sure we can find the dummy frameworks
+  # add the new module to Import Paths
   spec.xcconfig = { 
-  "SWIFT_INCLUDE_PATHS" => "$(SDKROOT)/System/Library/Frameworks",
-  "FRAMEWORK_SEARCH_PATHS" => "$(SDKROOT)/System/Library/Frameworks"
+  "SWIFT_INCLUDE_PATHS" => "$(PODS_ROOT)/SCrypto/Frameworks/$(PLATFORM_NAME)",
+  "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/SCrypto/Frameworks/$(PLATFORM_NAME)"
   }
-end
 
+end
