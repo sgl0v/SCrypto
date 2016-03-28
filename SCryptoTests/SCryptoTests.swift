@@ -9,17 +9,6 @@
 import XCTest
 @testable import SCrypto
 
-extension NSData {
-    func hexString() -> String {
-        let hexString = NSMutableString()
-        let bytes: [UInt8] = self.bytesArray()
-        for byte in bytes {
-            hexString.appendFormat("%02x", UInt(byte))
-        }
-        return hexString as String
-    }
-}
-
 class SCryptoTests: XCTestCase {
 
     struct Consts {

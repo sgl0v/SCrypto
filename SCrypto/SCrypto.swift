@@ -16,7 +16,16 @@ public extension NSData {
         return bytes
     }
 
+    func hexString() -> String {
+        let hexString = NSMutableString()
+        let bytes: [UInt8] = self.bytesArray()
+        for byte in bytes {
+            hexString.appendFormat("%02x", UInt(byte))
+        }
+        return hexString as String
+    }
 }
+
 
 internal protocol RawConvertable {
     typealias RawValue
@@ -134,8 +143,7 @@ public final class Digest {
     /**
      Initializes a new digest object with the provided cryptographic algorithm.
 
-     - Parameters:
-     - algorithm: The cryptographic algorithm to use.
+     - parameter algorithm: The cryptographic algorithm to use.
 
      - Returns: A newly created object to compute the message digest.
      */
@@ -166,16 +174,27 @@ public final class Digest {
 
 }
 
-/// The `NSData` extension defines methods to compute the message digest.
-public extension NSData {
+/// The `MessageDigestProducible` protocol defines methods to compute the message digest.
+public protocol MessageDigestProducible {
 
+    /**
+     Computes the message digest.
+
+     - parameter algorithm: The cryptographic algorithm to use.
+
+     - returns: the message digest.
+     */
+    func digest(algorithm: Digest.Algorithm) -> Self
+}
+
+public extension MessageDigestProducible {
     /**
      Computes the MD2 message digest at data and returns the result.
      Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
 
      - returns: the MD2 message digest.
      */
-    public func MD2() -> NSData {
+    public func MD2() -> Self {
         return digest(.MD2)
     }
 
@@ -185,7 +204,7 @@ public extension NSData {
 
      - returns: the MD4 message digest.
      */
-    public func MD4() -> NSData {
+    public func MD4() -> Self {
         return digest(.MD4)
     }
 
@@ -195,7 +214,7 @@ public extension NSData {
 
      - returns: the MD5 message digest.
      */
-    public func MD5() -> NSData {
+    public func MD5() -> Self {
         return digest(.MD5)
     }
 
@@ -204,7 +223,7 @@ public extension NSData {
 
      - returns: the SHA-1 message digest.
      */
-    public func SHA1() -> NSData {
+    public func SHA1() -> Self {
         return digest(.SHA1)
     }
 
@@ -213,7 +232,7 @@ public extension NSData {
 
      - returns: the SHA224 message digest.
      */
-    public func SHA224() -> NSData {
+    public func SHA224() -> Self {
         return digest(.SHA224)
     }
 
@@ -222,7 +241,7 @@ public extension NSData {
 
      - returns: the SHA256 message digest.
      */
-    public func SHA256() -> NSData {
+    public func SHA256() -> Self {
         return digest(.SHA256)
     }
 
@@ -231,7 +250,7 @@ public extension NSData {
 
      - returns: the SHA384 message digest.
      */
-    public func SHA384() -> NSData {
+    public func SHA384() -> Self {
         return digest(.SHA384)
     }
 
@@ -240,15 +259,31 @@ public extension NSData {
 
      - returns: the SHA512 message digest.
      */
-    public func SHA512() -> NSData {
+    public func SHA512() -> Self {
         return digest(.SHA512)
     }
+}
 
-    private func digest(algorithm: Digest.Algorithm) -> NSData {
+/// The `NSData` extension defines methods to compute the message digest.
+extension NSData: MessageDigestProducible {
+
+    public func digest(algorithm: Digest.Algorithm) -> Self {
         let digest = Digest(algorithm)
         digest.update(self.bytesArray())
         let messageDigest = digest.final()
-        return NSData(bytes: messageDigest, length: messageDigest.count)
+        return self.dynamicType.init(data: NSData(bytes: messageDigest, length: messageDigest.count))
+    }
+
+}
+
+/// The `String` extension defines methods to compute the message digest.
+extension String: MessageDigestProducible {
+
+    public func digest(algorithm: Digest.Algorithm) -> String {
+        let digest = Digest(algorithm)
+        digest.update(self.dataUsingEncoding(NSUTF8StringEncoding)!.bytesArray())
+        let messageDigest = digest.final()
+        return String(data: NSData(bytes: messageDigest, length: messageDigest.count), encoding: NSUTF8StringEncoding)!
     }
 
 }
@@ -394,6 +429,26 @@ public extension NSData {
         hmac.update(self.bytesArray())
         let result = hmac.final()
         return NSData(bytes: result, length: result.count)
+    }
+
+}
+
+/// The String extension defines methods to compute the HMAC.
+public extension String {
+
+    /**
+     Calculates the keyed-hash message authentication code (HMAC).
+     The message string and key will be interpreted as UTF8.
+
+     - parameter algorithm: The cryptographic hash algorithm to use.
+     - parameter key:       The secret cryptographic key.
+
+     - returns:  the message authentication code (string of hexadecimal digits).
+     */
+    public func hmac(algorithm: HMAC.Algorithm, key: String) -> String {
+        let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
+        let message = self.dataUsingEncoding(NSUTF8StringEncoding)!
+        return message.hmac(algorithm, key: key).hexString()
     }
 
 }
