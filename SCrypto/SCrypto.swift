@@ -606,7 +606,7 @@ public extension NSData {
 
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
-     - parameter key:  The shared secret key.
+     - parameter key:       The shared secret key.
      - parameter iv:        Initialization vector, optional.
 
      - throws: `SCryptoError` instance in case of eny errors.
@@ -624,7 +624,7 @@ public extension NSData {
 
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
-     - parameter key:  The shared secret key.
+     - parameter key:       The shared secret key.
      - parameter iv:        Initialization vector, optional.
 
      - throws: `SCryptoError` instance in case of eny errors.
@@ -637,6 +637,51 @@ public extension NSData {
         return NSData(bytes: decryptedBytes, length: decryptedBytes.count)
     }
 
+}
+
+/// The String extension defines methods for symmetric encryption algorithms.
+public extension String {
+
+    /**
+     Encrypts the plaintext.
+
+     - parameter algorithm: The symmetric algorithm to use for encryption
+     - parameter options:   The encryption options.
+     - parameter key:       The shared secret key.
+     - parameter iv:        Initialization vector, optional.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: Encrypted data.
+     */
+    public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: String, iv: String? = nil) throws -> String {
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
+        let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
+        let iv = iv?.dataUsingEncoding(NSUTF8StringEncoding)
+        let encryptedData = try data.encrypt(algorithm, options: options, key: key, iv: iv)
+        return String(data: encryptedData, encoding: NSUTF8StringEncoding)!
+    }
+
+    /**
+     Decrypts the ciphertext.
+
+     - parameter algorithm: The symmetric algorithm to use for encryption
+     - parameter options:   The encryption options.
+     - parameter key:       The shared secret key.
+     - parameter iv:        Initialization vector, optional.
+
+     - throws: `SCryptoError` instance in case of eny errors.
+
+     - returns: Decrypted data.
+     */
+    public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: String, iv: String? = nil) throws -> String {
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
+        let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
+        let iv = iv?.dataUsingEncoding(NSUTF8StringEncoding)
+        let encryptedData = try data.decrypt(algorithm, options: options, key: key, iv: iv)
+        return String(data: encryptedData, encoding: NSUTF8StringEncoding)!
+    }
+    
 }
 
 // MARK: PBKDF
