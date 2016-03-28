@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   spec.authors = { "Maksym Shcheglov" => 'maxscheglov@gmail.com' }
   spec.social_media_url = "http://twitter.com/sgl0v"
 
-  spec.platform = :ios, "9.1"
+  spec.platform = :ios, "9.0"
   spec.requires_arc = true
   spec.source = { git: "https://github.com/sgl0v/SCrypto.git", tag: "v#{spec.version}", submodules: true }
   spec.source_files = "SCrypto/**/*.{h,swift}"
