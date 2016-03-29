@@ -215,7 +215,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"CommonCrypto module map file generation.\"\n\nSDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\n\nMODULE_MAP_PATH=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework/module.map\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_MAP_PATH}\"\necho \"Created the module map file at ${MODULE_MAP_PATH}\"";
+			shellScript = "SDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\nMODULE_DIR=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nmkdir -p \"${MODULE_DIR}\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_DIR}/module.map\"\necho \"Created module map for ${PLATFORM_NAME}.\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
