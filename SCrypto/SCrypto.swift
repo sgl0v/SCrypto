@@ -27,7 +27,7 @@ public extension NSData {
 }
 
 
-internal protocol RawConvertable {
+internal protocol RawConvertible {
     #if swift(>=2.2)
     associatedtype RawValue
     #else
@@ -92,8 +92,8 @@ public enum SCryptoError: ErrorType, RawRepresentable, CustomStringConvertible {
 
 // MARK: Message Digest
 
-/// The `Digest` class defines methods to evaluate message digest.
-public final class Digest {
+/// The `MessageDigest` class provides applications functionality of a message digest algorithms, such as MD5 or SHA.
+public final class MessageDigest {
 
     /**
      The cryptographic algorithm types to evaluate message digest.
@@ -101,51 +101,38 @@ public final class Digest {
      MD2, MD4, and MD5 are recommended only for compatibility with existing applications.
      In new applications, SHA-256(or greater) should be preferred.
      */
-    public enum Algorithm: RawConvertable {
+    public enum Algorithm {
         case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
 
-        internal var digestLength: Int32 {
+        typealias Function = (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>
+
+        internal var digest: (length: Int32, function: Function) {
             switch self {
             case .MD2:
-                return CC_MD2_DIGEST_LENGTH
+                return (CC_MD2_DIGEST_LENGTH, CC_MD2)
             case .MD4:
-                return CC_MD4_DIGEST_LENGTH
+                return (CC_MD4_DIGEST_LENGTH, CC_MD4)
             case .MD5:
-                return CC_MD5_DIGEST_LENGTH
+                return (CC_MD5_DIGEST_LENGTH, CC_MD5)
             case .SHA1:
-                return CC_SHA1_DIGEST_LENGTH
+                return (CC_SHA1_DIGEST_LENGTH, CC_SHA1)
             case .SHA224:
-                return CC_SHA224_DIGEST_LENGTH
+                return (CC_SHA224_DIGEST_LENGTH, CC_SHA224)
             case .SHA256:
-                return CC_SHA256_DIGEST_LENGTH
+                return (CC_SHA256_DIGEST_LENGTH, CC_SHA256)
             case .SHA384:
-                return CC_SHA384_DIGEST_LENGTH
+                return (CC_SHA384_DIGEST_LENGTH, CC_SHA384)
             case .SHA512:
-                return CC_SHA512_DIGEST_LENGTH
+                return (CC_SHA512_DIGEST_LENGTH, CC_SHA512)
             }
         }
-
-        typealias RawValue = (data: UnsafePointer<Void>, len: CC_LONG, md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>
-        internal var rawValue: RawValue {
-            switch self {
-            case .MD2 : return CC_MD2
-            case .MD4 : return CC_MD4
-            case .MD5 : return CC_MD5
-            case .SHA1 : return CC_SHA1
-            case .SHA224: return CC_SHA224
-            case .SHA256: return CC_SHA256
-            case .SHA384: return CC_SHA384
-            case .SHA512: return CC_SHA512
-            }
-        }
-
     }
 
     private let algorithm: Algorithm
     private let data = NSMutableData()
 
     /**
-     Initializes a new digest object with the provided cryptographic algorithm.
+     Initializes a new digest object with the specified cryptographic algorithm.
 
      - parameter algorithm: The cryptographic algorithm to use.
 
@@ -156,23 +143,23 @@ public final class Digest {
     }
 
     /**
-     Appends specified bytes to the internal buffer. Can be called repeatedly with chunks of the message to be hashed.
+     Updates the digest using the specified array of bytes. Can be called repeatedly with chunks of the message to be hashed.
 
-     - parameter bytes:  The message to be hashed.
+     - parameter bytes:  The array of bytes to append.
      */
     public func update(bytes: [UInt8]) {
         self.data.appendBytes(bytes, length: bytes.count)
     }
 
     /**
-     Computes the message digest.
+     Evaluates the message digest.
 
      - returns: the message digest.
      */
     public func final() -> [UInt8] {
-        var digest = [UInt8](count: Int(self.algorithm.digestLength), repeatedValue: UInt8(0))
+        var digest = [UInt8](count: Int(self.algorithm.digest.length), repeatedValue: UInt8(0))
         // the one-shot routine returns the pointer passed in via the md parameter
-        self.algorithm.rawValue(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
+        self.algorithm.digest.function(data: self.data.bytes, len: CC_LONG(self.data.length), md: &digest)
         return digest
     }
 
@@ -182,18 +169,18 @@ public final class Digest {
 public protocol MessageDigestProducible {
 
     /**
-     Computes the message digest.
+     Produces the message digest.
 
      - parameter algorithm: The cryptographic algorithm to use.
 
      - returns: the message digest.
      */
-    func digest(algorithm: Digest.Algorithm) -> Self
+    func digest(algorithm: MessageDigest.Algorithm) -> Self
 }
 
 public extension MessageDigestProducible {
     /**
-     Computes the MD2 message digest at data and returns the result.
+     Evaluates the MD2 message digest at data and returns the result.
      Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
 
      - returns: the MD2 message digest.
@@ -203,7 +190,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the MD4 message digest at data and returns the result.
+     Evaluates the MD4 message digest at data and returns the result.
      Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
 
      - returns: the MD4 message digest.
@@ -213,7 +200,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the MD5 message digest at data and returns the result.
+     Evaluates the MD5 message digest at data and returns the result.
      Recommended only for compatibility with existing applications. In new applications, SHA-256(or greater) should be preferred.
 
      - returns: the MD5 message digest.
@@ -223,7 +210,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the SHA-1 message digest at data and returns the result.
+     Evaluates the SHA-1 message digest at data and returns the result.
 
      - returns: the SHA-1 message digest.
      */
@@ -232,7 +219,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the SHA224 message digest at data and returns the result.
+     Evaluates the SHA224 message digest at data and returns the result.
 
      - returns: the SHA224 message digest.
      */
@@ -241,7 +228,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the SHA256 message digest at data and returns the result.
+     Evaluates the SHA256 message digest at data and returns the result.
 
      - returns: the SHA256 message digest.
      */
@@ -250,7 +237,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the SHA384 message digest at data and returns the result.
+     Evaluates the SHA384 message digest at data and returns the result.
 
      - returns: the SHA384 message digest.
      */
@@ -259,7 +246,7 @@ public extension MessageDigestProducible {
     }
 
     /**
-     Computes the SHA512 message digest at data and returns the result.
+     Evaluates the SHA512 message digest at data and returns the result.
 
      - returns: the SHA512 message digest.
      */
@@ -271,8 +258,15 @@ public extension MessageDigestProducible {
 /// The `NSData` extension defines methods to compute the message digest.
 extension NSData: MessageDigestProducible {
 
-    public func digest(algorithm: Digest.Algorithm) -> Self {
-        let digest = Digest(algorithm)
+    /**
+     Produces the message digest.
+
+     - parameter algorithm: The cryptographic algorithm to use.
+
+     - returns:  the message digest.
+     */
+    public func digest(algorithm: MessageDigest.Algorithm) -> Self {
+        let digest = MessageDigest(algorithm)
         digest.update(self.bytesArray())
         let messageDigest = digest.final()
         return self.dynamicType.init(data: NSData(bytes: messageDigest, length: messageDigest.count))
@@ -283,11 +277,18 @@ extension NSData: MessageDigestProducible {
 /// The `String` extension defines methods to compute the message digest.
 extension String: MessageDigestProducible {
 
-    public func digest(algorithm: Digest.Algorithm) -> String {
-        let digest = Digest(algorithm)
+    /**
+     Produces the message digest.
+
+     - parameter algorithm: The cryptographic algorithm to use.
+
+     - returns:  the message digest (string of hexadecimal digits).
+     */
+    public func digest(algorithm: MessageDigest.Algorithm) -> String {
+        let digest = MessageDigest(algorithm)
         digest.update(self.dataUsingEncoding(NSUTF8StringEncoding)!.bytesArray())
         let messageDigest = digest.final()
-        return String(data: NSData(bytes: messageDigest, length: messageDigest.count), encoding: NSUTF8StringEncoding)!
+        return NSData(bytes: messageDigest, length: messageDigest.count).hexString()
     }
 
 }
@@ -345,7 +346,7 @@ public final class HMAC {
     /**
      Cryptographic hash functions, that may be used in the calculation of an HMAC.
      */
-    public enum Algorithm: RawConvertable {
+    public enum Algorithm: RawConvertible {
         case SHA1, MD5, SHA256, SHA384, SHA512, SHA224
 
         internal var digestLength : Int32 {
@@ -405,7 +406,7 @@ public final class HMAC {
     }
 
     /**
-     Computes the HMAC.
+     Evaluates the HMAC.
 
      - returns: the message authentication code.
      */
@@ -421,7 +422,7 @@ public final class HMAC {
 public extension NSData {
 
     /**
-     Calculates the keyed-hash message authentication code (HMAC).
+     Produces the keyed-hash message authentication code (HMAC).
 
      - parameter algorithm: The cryptographic hash algorithm to use.
      - parameter key:       The secret cryptographic key.
@@ -441,8 +442,8 @@ public extension NSData {
 public extension String {
 
     /**
-     Calculates the keyed-hash message authentication code (HMAC).
-     The message string and key will be interpreted as UTF8.
+     Produces the keyed-hash message authentication code (HMAC).
+     The key and message string and key are interpreted as UTF8.
 
      - parameter algorithm: The cryptographic hash algorithm to use.
      - parameter key:       The secret cryptographic key.
@@ -457,19 +458,19 @@ public extension String {
 
 }
 
-// MARK: Cryptor
+// MARK: Cipher
 
-/// The Cryptor class provides access to a number of symmetric encryption algorithms (stream and block ones).
-public final class Cryptor {
+/// The Cipher provides the functionality of a cryptographic cipher for encryption and decryption (stream and block algorithms).
+public final class Cipher {
 
     public typealias Data = [UInt8]
     public typealias Key = [UInt8]
     public typealias IV = [UInt8]
 
     /**
-     The encryption algorithms that are supported by the Cryptor.
+     The encryption algorithms that are supported by the Cipher.
      */
-    public enum Algorithm: RawConvertable {
+    public enum Algorithm: RawConvertible {
         case AES, DES, TripleDES, CAST, RC2, RC4, Blowfish
 
         typealias RawValue = CCAlgorithm
@@ -499,7 +500,7 @@ public final class Cryptor {
         }
     }
 
-    private enum Operation: RawConvertable {
+    private enum Operation: RawConvertible {
         case Encrypt, Decrypt
 
         typealias RawValue = CCOperation
@@ -524,7 +525,7 @@ public final class Cryptor {
 
         /// Perform the PKCS7 padding.
         public static let PKCS7Padding =  Options(rawValue: RawValue(kCCOptionPKCS7Padding))
-        /// Electronic Code Book Mode. Default is CBC.
+        /// Electronic Code Book Mode. This block cipher mode is not recommended for use. Default mode is CBC.
         public static let ECBMode = Options(rawValue: RawValue(kCCOptionECBMode))
     }
 
@@ -534,7 +535,7 @@ public final class Cryptor {
     private let iv: IV?
 
     /**
-     Initializes a new cryptor with the provided algorithm and options.
+     Initializes a new cipher with the provided algorithm and options.
 
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
@@ -542,7 +543,7 @@ public final class Cryptor {
      If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or
      if a stream cipher algorithm is selected. nil by default.
      
-     - returns: A newly created and initialized cryptor object.
+     - returns: A newly created and initialized cipher object.
      */
     init(algorithm: Algorithm, options: Options, iv: IV? = nil) {
         self.algorithm = algorithm
@@ -617,9 +618,9 @@ public extension NSData {
 
      - returns: Encrypted data.
      */
-    public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
-        let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
-        let encryptedBytes = try cryptor.encrypt(self.bytesArray(), key: key.bytesArray())
+    public func encrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
+        let cipher = Cipher(algorithm: algorithm, options: options, iv: iv?.bytesArray())
+        let encryptedBytes = try cipher.encrypt(self.bytesArray(), key: key.bytesArray())
         return NSData(bytes: encryptedBytes, length: encryptedBytes.count)
     }
 
@@ -635,16 +636,11 @@ public extension NSData {
 
      - returns: Decrypted data.
      */
-    public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
-        let cryptor = Cryptor(algorithm: algorithm, options: options, iv: iv?.bytesArray())
-        let decryptedBytes = try cryptor.decrypt(self.bytesArray(), key: key.bytesArray())
+    public func decrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: NSData, iv: NSData? = nil) throws -> NSData {
+        let cipher = Cipher(algorithm: algorithm, options: options, iv: iv?.bytesArray())
+        let decryptedBytes = try cipher.decrypt(self.bytesArray(), key: key.bytesArray())
         return NSData(bytes: decryptedBytes, length: decryptedBytes.count)
     }
-
-}
-
-/// The String extension defines methods for symmetric encryption algorithms.
-public extension String {
 
     /**
      Encrypts the plaintext.
@@ -658,12 +654,10 @@ public extension String {
 
      - returns: Encrypted data.
      */
-    public func encrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: String, iv: String? = nil) throws -> String {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
-        let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let iv = iv?.dataUsingEncoding(NSUTF8StringEncoding)
-        let encryptedData = try data.encrypt(algorithm, options: options, key: key, iv: iv)
-        return String(data: encryptedData, encoding: NSUTF8StringEncoding)!
+    public func encrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: String, iv: String? = nil) throws -> NSData {
+        let key: NSData = key.dataUsingEncoding(NSUTF8StringEncoding)!
+        let iv: NSData? = iv?.dataUsingEncoding(NSUTF8StringEncoding)
+        return try self.encrypt(algorithm, options: options, key: key, iv: iv)
     }
 
     /**
@@ -678,12 +672,10 @@ public extension String {
 
      - returns: Decrypted data.
      */
-    public func decrypt(algorithm: Cryptor.Algorithm, options: Cryptor.Options, key: String, iv: String? = nil) throws -> String {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)!
+    public func decrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: String, iv: String? = nil) throws -> NSData {
         let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
         let iv = iv?.dataUsingEncoding(NSUTF8StringEncoding)
-        let encryptedData = try data.decrypt(algorithm, options: options, key: key, iv: iv)
-        return String(data: encryptedData, encoding: NSUTF8StringEncoding)!
+        return try self.decrypt(algorithm, options: options, key: key, iv: iv)
     }
     
 }
@@ -701,7 +693,7 @@ public final class PBKDF {
     /**
      The Pseudo Random Algorithm to use for the derivation iterations.
      */
-    public enum PseudoRandomAlgorithm: RawConvertable {
+    public enum PseudoRandomAlgorithm: RawConvertible {
         case SHA1, SHA224, SHA256, SHA384, SHA512
 
         typealias RawValue = CCPseudoRandomAlgorithm
