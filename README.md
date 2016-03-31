@@ -1,4 +1,4 @@
-SCrypto
+#<p align="center">SCrypto</p>
 ===============
 [![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto) 
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
@@ -6,9 +6,9 @@ SCrypto
 [![License](https://img.shields.io/cocoapods/l/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Platform](https://img.shields.io/cocoapods/p/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 
-[[Overview](#overview) &bull; [Installation](#installation) &bull; [Demo](#demo) &bull; [Requirements](#requirements) &bull; [Licence](#licence)] 
+[[Overview](#overview) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Requirements](#requirements) &bull; [Alternatives](#alternatives)] &bull; [Licence](#licence)] 
 
-<br>
+---
 
 ##<a name="overview"></a>Overview
 SCrypto provides neat Swift interface to access the CommonCrypto routines.
@@ -22,11 +22,15 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 - [ ] iOS and OS X support
 - [ ] Swift Package Manager support
 
+---
+
 ##<a name="requirements"></a>Requirements
 
 - iOS 9.0 or later
 - Swift 2.0+
 - Xcode 7.3+
+
+---
 
 ##<a name="installation"></a>Installation
 ### Cocoapods
@@ -100,8 +104,65 @@ $ git submodule add https://github.com/sgl0v/SCrypto.git
 
 > The `SCrypto.framework` is automagically added as a target dependency and should appear as a linked and embedded framework in the `Build Phases` section.
 
-##<a name="usage"></a>Usage
+---
 
+##<a name="usage"></a>Usage
+### Message Digest ([MD5](https://en.wikipedia.org/wiki/MD5), [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm))
+Message digests are secure one-way [cryptographic hash functions](https://en.wikipedia.org/wiki/Cryptographic_hash_function) that take arbitrary-sized data and output a fixed-length hash value.
+
+```swift
+let sha256 = "message".SHA256()
+```
+
+### Keyed-hash message authentication code ([HMAC](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code))
+A MAC provides a way to check the integrity of information transmitted over or stored in an unreliable medium, based on a secret key. Typically it is used between two parties that share a secret key in order to validate information transmitted between these parties. A MAC mechanism that is based on cryptographic hash functions is referred to as HMAC. The following standard MAC algorithms are supported: SHA1, MD5, SHA256, SHA384, SHA512, SHA224.
+
+```swift
+let secretKey = "secret_key".dataUsingEncoding(NSUTF8StringEncoding)!
+let message = "message".dataUsingEncoding(NSUTF8StringEncoding)!
+let hmac = message.hmac(.SHA256, key: secretKey)
+```
+
+### Pseudorandom number generator ([PRNG](https://en.wikipedia.org/wiki/Pseudorandom_number_generator))
+Generates cryptographically strong random bits suitable for use as cryptographic keys, IVs, nonces etc.
+
+```swift
+let randomBytes = try! NSData.random(128)
+```
+
+### Symmetric-key algorithms ([AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard), [TripleDES](https://en.wikipedia.org/wiki/Triple_DES), [CAST](https://en.wikipedia.org/wiki/CAST5), [RC2](https://en.wikipedia.org/wiki/RC2), [RC4](https://en.wikipedia.org/wiki/RC4), [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher))
+
+Symmetric-key algorithms use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext. There are stream or block ciphers algorithms.
+
+Here is the way to encrypt data via AES algorithm in CBC mode with PKCS7 Padding:
+
+```swift
+let plaintext = "plain text".dataUsingEncoding(NSUTF8StringEncoding)!
+let sharedSecretKey = "shared_secret_key".dataUsingEncoding(NSUTF8StringEncoding)!.SHA256() // AES-256
+let IV = NSData.random(128) // Randomly generated IV. Length is equal to the AES block size(128)
+let ciphertext = try! plaintext.encrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
+let plaintext2 = try! ciphertext.decrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
+```
+
+### Password-Based Key Derivation Function ([PBKDF2](https://en.wikipedia.org/wiki/PBKDF2))
+Key derivation functions are used for turning a passphrase into an arbitrary length key for use as a cryptographic key in subsequent operations.
+
+```swift
+let password = "password".dataUsingEncoding(NSUTF8StringEncoding)!
+let salt = NSData.random(256)
+let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 64)
+```
+
+---
+
+##<a name="alternatives"></a>Alternatives
+Looking for something else? Try another Swift CommonCrypto wrappers:
+
+- [RNCryptor](https://github.com/RNCryptor/RNCryptor)
+- [IDZSwiftCommonCrypto](https://github.com/iosdevzone/IDZSwiftCommonCrypto)
+- [Crypto](https://github.com/soffes/Crypto)
+
+---
  
 ##<a name="licence"></a>Licence
 
