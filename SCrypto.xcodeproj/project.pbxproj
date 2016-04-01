@@ -71,8 +71,8 @@
 		5ED8F9E41C51788B00DE0760 = {
 			isa = PBXGroup;
 			children = (
-				5ED8F9F01C51788B00DE0760 /* SCrypto */,
-				5ED8F9FC1C51788B00DE0760 /* SCryptoTests */,
+				5ED8F9F01C51788B00DE0760 /* Sources */,
+				5ED8F9FC1C51788B00DE0760 /* Tests */,
 				5ED8FA111C51841C00DE0760 /* CommonCrypto */,
 				5ED8F9EF1C51788B00DE0760 /* Products */,
 			);
@@ -88,23 +88,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5ED8F9F01C51788B00DE0760 /* SCrypto */ = {
+		5ED8F9F01C51788B00DE0760 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				5ED8F9F11C51788B00DE0760 /* SCrypto.h */,
 				5ED8F9F31C51788B00DE0760 /* Info.plist */,
 				5ED8FA091C51827400DE0760 /* SCrypto.swift */,
 			);
-			path = SCrypto;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		5ED8F9FC1C51788B00DE0760 /* SCryptoTests */ = {
+		5ED8F9FC1C51788B00DE0760 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */,
 				5ED8F9FF1C51788B00DE0760 /* Info.plist */,
 			);
-			path = SCryptoTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		5ED8FA111C51841C00DE0760 /* CommonCrypto */ = {
@@ -392,7 +392,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SCrypto/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "";
@@ -416,7 +416,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SCrypto/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "";
@@ -434,7 +434,7 @@
 		5ED8FA061C51788B00DE0760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,7 +444,7 @@
 		5ED8FA071C51788B00DE0760 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
