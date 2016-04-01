@@ -165,7 +165,7 @@ class SCryptoTests: XCTestCase {
         cipher(Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions([]), key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256_Padding, algorithm: .AES, options: .PKCS7Padding)
     }
 
-    func cipher(plaintext: String, key: String, IV: String?, expectedCyphertext: String, algorithm: Cryptor.Algorithm, options: Cryptor.Options) {
+    func cipher(plaintext: String, key: String, IV: String?, expectedCyphertext: String, algorithm: Cipher.Algorithm, options: Cipher.Options) {
         let plaintext = NSData(base64EncodedString: plaintext, options: [])!
         let aesKey = NSData(base64EncodedString: key, options: [])!
         let IV = IV == nil ? nil : NSData(base64EncodedString: IV!, options: [])

@@ -1,7 +1,5 @@
 #<p align="center">SCrypto</p>
 
----
-
 [![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto) 
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -17,7 +15,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ### Features
 
 - [x] Essential `NSData` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
-- [x] Supports Swift 2.0 and Swift 2.2
+- [x] Swift 2.0 and Swift 2.2 support
 - [x] Cocoapods and Carthage compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
@@ -50,7 +48,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
-pod 'SCrypto', '~> 1.0'
+pod 'SCrypto', '~> 1.0.0'
 ```
 
 Then, run the following command:
@@ -70,7 +68,7 @@ $ brew install carthage
 To integrate SCrypto into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "sgl0v/SCrypto" ~> 1.0
+github "sgl0v/SCrypto" ~> 1.0.0
 ```
 
 Run `carthage update` to build the framework and drag the built `SCrypto.framework` into your Xcode project.
@@ -104,7 +102,7 @@ $ git submodule add https://github.com/sgl0v/SCrypto.git
     
 - Just select the `SCrypto.framework iOS` and that's it!
 
-> The `SCrypto.framework` is automagically added as a target dependency and should appear as a linked and embedded framework in the `Build Phases` section.
+	> The `SCrypto.framework` is automagically added as a target dependency and should appear as a linked and embedded framework in the `Build Phases` section.
 
 ---
 
@@ -117,10 +115,10 @@ let sha256 = "message".SHA256()
 ```
 
 ### Keyed-hash message authentication code ([HMAC](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code))
-A MAC provides a way to check the integrity of information transmitted over or stored in an unreliable medium, based on a secret key. Typically it is used between two parties that share a secret key in order to validate information transmitted between these parties. A MAC mechanism that is based on cryptographic hash functions is referred to as HMAC. The following standard MAC algorithms are supported: SHA1, MD5, SHA256, SHA384, SHA512, SHA224.
+Hash-based message authentication codes (or HMACs) provides a way for calculating message authentication codes using a cryptographic hash function coupled with a secret key. You can use an HMAC to verify both the integrity and authenticity of a message. The following standard hash algorithm are supported: SHA1, MD5, SHA256, SHA384, SHA512, SHA224.
 
 ```swift
-let secretKey = "secret_key".dataUsingEncoding(NSUTF8StringEncoding)!
+let secretKey = try! NSData.random(32) 
 let message = "message".dataUsingEncoding(NSUTF8StringEncoding)!
 let hmac = message.hmac(.SHA256, key: secretKey)
 ```
@@ -129,10 +127,10 @@ let hmac = message.hmac(.SHA256, key: secretKey)
 Generates cryptographically strong random bits suitable for use as cryptographic keys, IVs, nonces etc.
 
 ```swift
-let randomBytes = try! NSData.random(128)
+let randomBytes = try! NSData.random(16)
 ```
 
-### Symmetric-key algorithms ([AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard), [TripleDES](https://en.wikipedia.org/wiki/Triple_DES), [CAST](https://en.wikipedia.org/wiki/CAST5), [RC2](https://en.wikipedia.org/wiki/RC2), [RC4](https://en.wikipedia.org/wiki/RC4), [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher))
+### Symmetric-key algorithms ([AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard), [TripleDES](https://en.wikipedia.org/wiki/Triple_DES), [CAST](https://en.wikipedia.org/wiki/CAST5), [RC2](https://en.wikipedia.org/wiki/RC2), [RC4](https://en.wikipedia.org/wiki/RC4), [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher)))
 
 Symmetric-key algorithms use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext. Note that symmetric encryption only provides secrecy but not integrity. There are recent encryption modes which combine symmetric encryption and checked integrity (not supported by CommonCrypto). For this reason it is strongly recommended to combine encryption with a HMAC.
 
@@ -141,7 +139,7 @@ Here is the way to encrypt and decrypt data via AES algorithm in CBC mode with P
 ```swift
 let plaintext = "plain text".dataUsingEncoding(NSUTF8StringEncoding)!
 let sharedSecretKey = "shared_secret_key".dataUsingEncoding(NSUTF8StringEncoding)!.SHA256() // AES-256
-let IV = NSData.random(128) // Randomly generated IV. Length is equal to the AES block size(128)
+let IV = try! NSData.random(16) // Randomly generated IV. Length is equal to the AES block size(128)
 let ciphertext = try! plaintext.encrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
 let plaintext2 = try! ciphertext.decrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
 ```
@@ -151,8 +149,8 @@ Key derivation functions are used for turning a passphrase into an arbitrary len
 
 ```swift
 let password = "password".dataUsingEncoding(NSUTF8StringEncoding)!
-let salt = NSData.random(256)
-let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 64)
+let salt = try! NSData.random(32)
+let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 32)
 ```
 
 ---
