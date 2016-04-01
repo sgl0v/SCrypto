@@ -132,9 +132,9 @@ let randomBytes = try! NSData.random(128)
 
 ### Symmetric-key algorithms ([AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard), [TripleDES](https://en.wikipedia.org/wiki/Triple_DES), [CAST](https://en.wikipedia.org/wiki/CAST5), [RC2](https://en.wikipedia.org/wiki/RC2), [RC4](https://en.wikipedia.org/wiki/RC4), [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher))
 
-Symmetric-key algorithms use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext. There are stream or block ciphers algorithms.
+Symmetric-key algorithms use the same cryptographic keys for both encryption of plaintext and decryption of ciphertext. Note that symmetric encryption only provides secrecy but not integrity. There are recent encryption modes which combine symmetric encryption and checked integrity (not supported by CommonCrypto). For this reason it is strongly recommended to combine encryption with a HMAC.
 
-Here is the way to encrypt data via AES algorithm in CBC mode with PKCS7 Padding:
+Here is the way to encrypt and decrypt data via AES algorithm in CBC mode with PKCS7 Padding:
 
 ```swift
 let plaintext = "plain text".dataUsingEncoding(NSUTF8StringEncoding)!

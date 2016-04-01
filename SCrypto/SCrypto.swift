@@ -539,9 +539,7 @@ public final class Cipher {
 
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
-     - parameter iv:        Initialization vector, optional. Used by block ciphers when Cipher Block Chaining (CBC) mode is enabled.
-     If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or
-     if a stream cipher algorithm is selected. nil by default.
+     - parameter iv:        Initialization vector, optional. Used by block ciphers when Cipher Block Chaining (CBC) mode is enabled. If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or if a stream cipher algorithm is selected. nil by default.
      
      - returns: A newly created and initialized cipher object.
      */
