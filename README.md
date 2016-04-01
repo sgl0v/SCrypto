@@ -1,12 +1,14 @@
 #<p align="center">SCrypto</p>
-===============
+
+---
+
 [![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto) 
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Platform](https://img.shields.io/cocoapods/p/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 
-[[Overview](#overview) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Requirements](#requirements) &bull; [Alternatives](#alternatives)] &bull; [Licence](#licence)] 
+[[Overview](#overview) &bull; [Requirements](#requirements) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Alternatives](#alternatives) &bull; [Licence](#licence)] 
 
 ---
 
