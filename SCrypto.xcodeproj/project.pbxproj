@@ -27,7 +27,7 @@
 		5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED8F9F11C51788B00DE0760 /* SCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCrypto.h; sourceTree = "<group>"; };
 		5ED8F9F31C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ED8F9F81C51788B00DE0760 /* SCrypto iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SCrypto iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCryptoTests.swift; sourceTree = "<group>"; };
 		5ED8F9FF1C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED8FA091C51827400DE0760 /* SCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCrypto.swift; sourceTree = "<group>"; };
@@ -55,8 +55,8 @@
 		5ED8F9E41C51788B00DE0760 = {
 			isa = PBXGroup;
 			children = (
-				5ED8F9F01C51788B00DE0760 /* SCrypto */,
-				5ED8F9FC1C51788B00DE0760 /* SCryptoTests */,
+				5ED8F9F01C51788B00DE0760 /* Source */,
+				5ED8F9FC1C51788B00DE0760 /* Tests */,
 				5ED8F9EF1C51788B00DE0760 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,28 +65,28 @@
 			isa = PBXGroup;
 			children = (
 				5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */,
-				5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */,
+				5ED8F9F81C51788B00DE0760 /* SCrypto iOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5ED8F9F01C51788B00DE0760 /* SCrypto */ = {
+		5ED8F9F01C51788B00DE0760 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				5ED8F9F11C51788B00DE0760 /* SCrypto.h */,
 				5ED8F9F31C51788B00DE0760 /* Info.plist */,
 				5ED8FA091C51827400DE0760 /* SCrypto.swift */,
 			);
-			path = SCrypto;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		5ED8F9FC1C51788B00DE0760 /* SCryptoTests */ = {
+		5ED8F9FC1C51788B00DE0760 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */,
 				5ED8F9FF1C51788B00DE0760 /* Info.plist */,
 			);
-			path = SCryptoTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,9 +103,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5ED8F9ED1C51788B00DE0760 /* SCrypto */ = {
+		5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto" */;
+			buildConfigurationList = 5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto iOS" */;
 			buildPhases = (
 				5E00FEDD1CA9CB3E00E69936 /* ShellScript */,
 				5ED8F9E91C51788B00DE0760 /* Sources */,
@@ -117,14 +117,14 @@
 			);
 			dependencies = (
 			);
-			name = SCrypto;
+			name = "SCrypto iOS";
 			productName = SCrypto;
 			productReference = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5ED8F9F71C51788B00DE0760 /* SCryptoTests */ = {
+		5ED8F9F71C51788B00DE0760 /* SCrypto iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCryptoTests" */;
+			buildConfigurationList = 5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto iOS Tests" */;
 			buildPhases = (
 				5ED8F9F41C51788B00DE0760 /* Sources */,
 				5ED8F9F51C51788B00DE0760 /* Frameworks */,
@@ -135,9 +135,9 @@
 			dependencies = (
 				5ED8F9FB1C51788B00DE0760 /* PBXTargetDependency */,
 			);
-			name = SCryptoTests;
+			name = "SCrypto iOS Tests";
 			productName = SCryptoTests;
-			productReference = 5ED8F9F81C51788B00DE0760 /* SCryptoTests.xctest */;
+			productReference = 5ED8F9F81C51788B00DE0760 /* SCrypto iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -170,8 +170,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5ED8F9ED1C51788B00DE0760 /* SCrypto */,
-				5ED8F9F71C51788B00DE0760 /* SCryptoTests */,
+				5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */,
+				5ED8F9F71C51788B00DE0760 /* SCrypto iOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -231,7 +231,7 @@
 /* Begin PBXTargetDependency section */
 		5ED8F9FB1C51788B00DE0760 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5ED8F9ED1C51788B00DE0760 /* SCrypto */;
+			target = 5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */;
 			targetProxy = 5ED8F9FA1C51788B00DE0760 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -335,14 +335,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
-				INFOPLIST_FILE = SCrypto/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SCrypto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
@@ -363,14 +363,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
-				INFOPLIST_FILE = SCrypto/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCrypto;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SCrypto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
@@ -384,7 +384,7 @@
 		5ED8FA061C51788B00DE0760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -394,7 +394,7 @@
 		5ED8FA071C51788B00DE0760 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = SCryptoTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -413,7 +413,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto" */ = {
+		5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5ED8FA031C51788B00DE0760 /* Debug */,
@@ -422,7 +422,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCryptoTests" */ = {
+		5ED8FA051C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5ED8FA061C51788B00DE0760 /* Debug */,

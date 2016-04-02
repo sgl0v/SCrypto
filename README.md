@@ -10,7 +10,7 @@
 
 ---
 
-##<a name="overview"></a>Overview
+##Overview
 SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ### Features
 
@@ -24,7 +24,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 
 ---
 
-##<a name="requirements"></a>Requirements
+##Requirements
 
 - iOS 9.0 or later
 - Swift 2.0+
@@ -32,7 +32,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 
 ---
 
-##<a name="installation"></a>Installation
+##Installation
 ### Cocoapods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
@@ -106,7 +106,7 @@ $ git submodule add https://github.com/sgl0v/SCrypto.git
 
 ---
 
-##<a name="usage"></a>Usage
+##Usage
 ### Message Digest ([MD5](https://en.wikipedia.org/wiki/MD5), [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm))
 Message digests are secure one-way [cryptographic hash functions](https://en.wikipedia.org/wiki/Cryptographic_hash_function) that take arbitrary-sized data and output a fixed-length hash value.
 
@@ -155,7 +155,7 @@ let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, 
 
 ---
 
-##<a name="alternatives"></a>Alternatives
+##Alternatives
 Looking for something else? Try another Swift CommonCrypto wrappers:
 
 - [RNCryptor](https://github.com/RNCryptor/RNCryptor)
@@ -164,6 +164,6 @@ Looking for something else? Try another Swift CommonCrypto wrappers:
 
 ---
  
-##<a name="licence"></a>Licence
+##Licence
 
 `SCrypto` is MIT-licensed. See `LICENSE`. 
