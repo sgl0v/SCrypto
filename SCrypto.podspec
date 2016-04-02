@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, "9.0"
   spec.requires_arc = true
   spec.source = { git: "https://github.com/sgl0v/SCrypto.git", tag: "v#{spec.version}", submodules: true }
-  spec.source_files = "SCrypto/**/*.{h,swift}"
+  spec.source_files = "Source/**/*.{h,swift}"
 
   # Create module.map files for CommonCrypto framework
   spec.preserve_paths = "Frameworks"
