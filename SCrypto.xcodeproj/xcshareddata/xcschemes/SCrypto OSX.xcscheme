@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ED8F9ED1C51788B00DE0760"
+               BlueprintIdentifier = "5EAB865D1CADCF8F00182F7C"
                BuildableName = "SCrypto.framework"
-               BlueprintName = "SCrypto iOS"
+               BlueprintName = "SCrypto OSX"
+               ReferencedContainer = "container:SCrypto.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5EAB86661CADCF8F00182F7C"
+               BuildableName = "SCrypto OSX Tests.xctest"
+               BlueprintName = "SCrypto OSX Tests"
                ReferencedContainer = "container:SCrypto.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,9 +47,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ED8F9F71C51788B00DE0760"
-               BuildableName = "SCrypto iOS Tests.xctest"
-               BlueprintName = "SCrypto iOS Tests"
+               BlueprintIdentifier = "5EAB86661CADCF8F00182F7C"
+               BuildableName = "SCrypto OSX Tests.xctest"
+               BlueprintName = "SCrypto OSX Tests"
                ReferencedContainer = "container:SCrypto.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +57,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5ED8F9ED1C51788B00DE0760"
+            BlueprintIdentifier = "5EAB865D1CADCF8F00182F7C"
             BuildableName = "SCrypto.framework"
-            BlueprintName = "SCrypto iOS"
+            BlueprintName = "SCrypto OSX"
             ReferencedContainer = "container:SCrypto.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +79,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5ED8F9ED1C51788B00DE0760"
+            BlueprintIdentifier = "5EAB865D1CADCF8F00182F7C"
             BuildableName = "SCrypto.framework"
-            BlueprintName = "SCrypto iOS"
+            BlueprintName = "SCrypto OSX"
             ReferencedContainer = "container:SCrypto.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +97,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5ED8F9ED1C51788B00DE0760"
+            BlueprintIdentifier = "5EAB865D1CADCF8F00182F7C"
             BuildableName = "SCrypto.framework"
-            BlueprintName = "SCrypto iOS"
+            BlueprintName = "SCrypto OSX"
             ReferencedContainer = "container:SCrypto.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

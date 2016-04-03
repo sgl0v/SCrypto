@@ -6,7 +6,7 @@
 //  Copyright © 2016 Maksym Shcheglov. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for SCrypto.
 FOUNDATION_EXPORT double SCryptoVersionNumber;

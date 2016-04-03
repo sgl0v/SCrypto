@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EAB86681CADCF8F00182F7C /* SCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EAB865E1CADCF8F00182F7C /* SCrypto.framework */; };
+		5EAB86751CADCFA200182F7C /* SCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED8F9F11C51788B00DE0760 /* SCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5EAB86761CADCFA400182F7C /* SCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8FA091C51827400DE0760 /* SCrypto.swift */; };
+		5EAB86771CADCFA700182F7C /* SCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */; };
 		5ED8F9F21C51788B00DE0760 /* SCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED8F9F11C51788B00DE0760 /* SCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5ED8F9F91C51788B00DE0760 /* SCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */; };
 		5ED8F9FE1C51788B00DE0760 /* SCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */; };
@@ -14,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5EAB86691CADCF8F00182F7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ED8F9E51C51788B00DE0760 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5EAB865D1CADCF8F00182F7C;
+			remoteInfo = "SCrypto OSX";
+		};
 		5ED8F9FA1C51788B00DE0760 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5ED8F9E51C51788B00DE0760 /* Project object */;
@@ -24,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5EAB865E1CADCF8F00182F7C /* SCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EAB86671CADCF8F00182F7C /* SCrypto OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SCrypto OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED8F9F11C51788B00DE0760 /* SCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCrypto.h; sourceTree = "<group>"; };
 		5ED8F9F31C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +47,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5EAB865A1CADCF8F00182F7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EAB86641CADCF8F00182F7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAB86681CADCF8F00182F7C /* SCrypto.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ED8F9EA1C51788B00DE0760 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,6 +94,8 @@
 			children = (
 				5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */,
 				5ED8F9F81C51788B00DE0760 /* SCrypto iOS Tests.xctest */,
+				5EAB865E1CADCF8F00182F7C /* SCrypto.framework */,
+				5EAB86671CADCF8F00182F7C /* SCrypto OSX Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +122,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5EAB865B1CADCF8F00182F7C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAB86751CADCFA200182F7C /* SCrypto.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ED8F9EB1C51788B00DE0760 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +141,43 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5EAB865D1CADCF8F00182F7C /* SCrypto OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EAB866F1CADCF8F00182F7C /* Build configuration list for PBXNativeTarget "SCrypto OSX" */;
+			buildPhases = (
+				5EAB86781CADD05300182F7C /* ShellScript */,
+				5EAB86591CADCF8F00182F7C /* Sources */,
+				5EAB865A1CADCF8F00182F7C /* Frameworks */,
+				5EAB865B1CADCF8F00182F7C /* Headers */,
+				5EAB865C1CADCF8F00182F7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SCrypto OSX";
+			productName = "SCrypto OSX";
+			productReference = 5EAB865E1CADCF8F00182F7C /* SCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5EAB86661CADCF8F00182F7C /* SCrypto OSX Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EAB86721CADCF8F00182F7C /* Build configuration list for PBXNativeTarget "SCrypto OSX Tests" */;
+			buildPhases = (
+				5EAB86631CADCF8F00182F7C /* Sources */,
+				5EAB86641CADCF8F00182F7C /* Frameworks */,
+				5EAB86651CADCF8F00182F7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5EAB866A1CADCF8F00182F7C /* PBXTargetDependency */,
+			);
+			name = "SCrypto OSX Tests";
+			productName = "SCrypto OSXTests";
+			productReference = 5EAB86671CADCF8F00182F7C /* SCrypto OSX Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5ED8FA021C51788B00DE0760 /* Build configuration list for PBXNativeTarget "SCrypto iOS" */;
@@ -146,10 +221,16 @@
 		5ED8F9E51C51788B00DE0760 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Maksym Shcheglov";
 				TargetAttributes = {
+					5EAB865D1CADCF8F00182F7C = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					5EAB86661CADCF8F00182F7C = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					5ED8F9ED1C51788B00DE0760 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -172,11 +253,27 @@
 			targets = (
 				5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */,
 				5ED8F9F71C51788B00DE0760 /* SCrypto iOS Tests */,
+				5EAB865D1CADCF8F00182F7C /* SCrypto OSX */,
+				5EAB86661CADCF8F00182F7C /* SCrypto OSX Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5EAB865C1CADCF8F00182F7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EAB86651CADCF8F00182F7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ED8F9EC1C51788B00DE0760 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -207,9 +304,38 @@
 			shellPath = /bin/sh;
 			shellScript = "SDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\nMODULE_DIR=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nmkdir -p \"${MODULE_DIR}\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_DIR}/module.map\"\necho \"Created module map for ${PLATFORM_NAME}.\"\n";
 		};
+		5EAB86781CADD05300182F7C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\nMODULE_DIR=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nmkdir -p \"${MODULE_DIR}\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_DIR}/module.map\"\necho \"Created module map for ${PLATFORM_NAME}.\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5EAB86591CADCF8F00182F7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAB86761CADCFA400182F7C /* SCrypto.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EAB86631CADCF8F00182F7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAB86771CADCFA700182F7C /* SCryptoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ED8F9E91C51788B00DE0760 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +355,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5EAB866A1CADCF8F00182F7C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5EAB865D1CADCF8F00182F7C /* SCrypto OSX */;
+			targetProxy = 5EAB86691CADCF8F00182F7C /* PBXContainerItemProxy */;
+		};
 		5ED8F9FB1C51788B00DE0760 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5ED8F9ED1C51788B00DE0760 /* SCrypto iOS */;
@@ -237,6 +368,84 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5EAB86701CADCF8F00182F7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Source/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSX";
+				PRODUCT_NAME = SCrypto;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
+			};
+			name = Debug;
+		};
+		5EAB86711CADCF8F00182F7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Source/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSX";
+				PRODUCT_NAME = SCrypto;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
+			};
+			name = Release;
+		};
+		5EAB86731CADCF8F00182F7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5EAB86741CADCF8F00182F7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		5ED8FA001C51788B00DE0760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -404,6 +613,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5EAB866F1CADCF8F00182F7C /* Build configuration list for PBXNativeTarget "SCrypto OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EAB86701CADCF8F00182F7C /* Debug */,
+				5EAB86711CADCF8F00182F7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5EAB86721CADCF8F00182F7C /* Build configuration list for PBXNativeTarget "SCrypto OSX Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EAB86731CADCF8F00182F7C /* Debug */,
+				5EAB86741CADCF8F00182F7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5ED8F9E81C51788B00DE0760 /* Build configuration list for PBXProject "SCrypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
