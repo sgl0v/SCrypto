@@ -19,7 +19,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 - [x] Cocoapods and Carthage compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
-- [ ] iOS and OS X support
+- [x] iOS and OS X support
 - [ ] Swift Package Manager support
 
 ---
