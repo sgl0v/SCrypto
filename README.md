@@ -1,6 +1,7 @@
 #<p align="center">SCrypto</p>
 
 [![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto) 
+[![Coverage Status](https://coveralls.io/repos/sgl0v/SCrypto/badge.svg?branch=master&service=github)](https://coveralls.io/github/sgl0v/SCrypto?branch=master)
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
