@@ -469,6 +469,15 @@ public final class Cipher {
 
     /**
      The encryption algorithms that are supported by the Cipher.
+     
+     - AES: Advanced Encryption Standard is a block cipher standardized by NIST. AES is both fast, and cryptographically strong. It is a good default choice for encryption.
+            The secret key must be either 128, 192, or 256 bits long.
+     - DES: A block cipher. The key should be either 64 bits long.
+     - TripleDES: A block cipher standardized by NIST and not recommended for new applications because it is incredibly slow. The key should be 192 bits long.
+     - CAST: A block cipher approved for use in the Canadian government by the Communications Security Establishment. It is a variable key length cipher and supports keys from 40-128 bits in length in increments of 8 bits.
+     - RC2: A block cipher with variable key length from 8 to 1024 bits, in steps of 8 bits.
+     - RC4: A stream cipher with serious weaknesses in its initial stream output. Its use is strongly discouraged. The secret key must be either 40, 56, 64, 80, 128, 192, or 256 bits in length.
+     - Blowfish: A block cipher with variable key length from 32 to 448 bits in increments of 8 bits. Known to be susceptible to attacks when using weak keys.
      */
     public enum Algorithm: RawConvertible {
         case AES, DES, TripleDES, CAST, RC2, RC4, Blowfish
@@ -610,7 +619,7 @@ public extension NSData {
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
      - parameter key:       The shared secret key.
-     - parameter iv:        Initialization vector, optional.
+     - parameter iv:        Initialization vector, optional. Used by block ciphers when Cipher Block Chaining (CBC) mode is enabled. If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or if a stream cipher algorithm is selected. nil by default.
 
      - throws: `SCryptoError` instance in case of eny errors.
 
@@ -628,7 +637,7 @@ public extension NSData {
      - parameter algorithm: The symmetric algorithm to use for encryption
      - parameter options:   The encryption options.
      - parameter key:       The shared secret key.
-     - parameter iv:        Initialization vector, optional.
+     - parameter iv:        Initialization vector, optional. Used by block ciphers when Cipher Block Chaining (CBC) mode is enabled. If present, must be the same length as the selected algorithm's block size. This parameter is ignored if ECB mode is used or if a stream cipher algorithm is selected. nil by default.
 
      - throws: `SCryptoError` instance in case of eny errors.
 
@@ -640,42 +649,6 @@ public extension NSData {
         return NSData(bytes: decryptedBytes, length: decryptedBytes.count)
     }
 
-    /**
-     Encrypts the plaintext.
-
-     - parameter algorithm: The symmetric algorithm to use for encryption
-     - parameter options:   The encryption options.
-     - parameter key:       The shared secret key.
-     - parameter iv:        Initialization vector, optional.
-
-     - throws: `SCryptoError` instance in case of eny errors.
-
-     - returns: Encrypted data.
-     */
-    public func encrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: String, iv: String? = nil) throws -> NSData {
-        let key: NSData = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let iv: NSData? = iv?.dataUsingEncoding(NSUTF8StringEncoding)
-        return try self.encrypt(algorithm, options: options, key: key, iv: iv)
-    }
-
-    /**
-     Decrypts the ciphertext.
-
-     - parameter algorithm: The symmetric algorithm to use for encryption
-     - parameter options:   The encryption options.
-     - parameter key:       The shared secret key.
-     - parameter iv:        Initialization vector, optional.
-
-     - throws: `SCryptoError` instance in case of eny errors.
-
-     - returns: Decrypted data.
-     */
-    public func decrypt(algorithm: Cipher.Algorithm, options: Cipher.Options, key: String, iv: String? = nil) throws -> NSData {
-        let key = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let iv = iv?.dataUsingEncoding(NSUTF8StringEncoding)
-        return try self.decrypt(algorithm, options: options, key: key, iv: iv)
-    }
-    
 }
 
 // MARK: PBKDF
