@@ -1,0 +1,6 @@
+ci_service: travis_ci
+coverage_service: coveralls
+xcodeproj: SCrypto.xcodeproj
+workspace: SCrypto.xcworkspace
+scheme: "SCrypto iOS"
+source_directory: Source

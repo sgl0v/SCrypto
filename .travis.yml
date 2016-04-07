@@ -21,8 +21,9 @@ env:
     - DESTINATION="OS=9.3,name=iPhone 6S Plus"     SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
     - DESTINATION="arch=x86_64"                    SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
 before_install:
-  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - gem install cocoapods --no-document --quiet
+  - gem install xcpretty --no-document --quiet
+  - gem install slather --no-document --quiet
   - cd $TRAVIS_BUILD_DIR
 script:
   - set -o pipefail
@@ -41,5 +42,6 @@ script:
   - if [ $POD_LINT == "YES" ]; then
       pod lib lint --quick;
     fi
+after_success: slather
 notifications:
   email: false
