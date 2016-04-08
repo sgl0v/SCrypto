@@ -70,6 +70,15 @@ class SCryptoTests: XCTestCase {
         XCTAssertTrue(SCryptoError.Unimplemented.rawValue == -4305)
         XCTAssertTrue(SCryptoError.Overflow.rawValue == -4306)
         XCTAssertTrue(SCryptoError.RNGFailure.rawValue == -4307)
+
+        XCTAssertNotNil(SCryptoError.ParamError.description)
+        XCTAssertNotNil(SCryptoError.BufferTooSmall.description)
+        XCTAssertNotNil(SCryptoError.MemoryFailure.description)
+        XCTAssertNotNil(SCryptoError.AlignmentError.description)
+        XCTAssertNotNil(SCryptoError.DecodeError.description)
+        XCTAssertNotNil(SCryptoError.Unimplemented.description)
+        XCTAssertNotNil(SCryptoError.Overflow.description)
+        XCTAssertNotNil(SCryptoError.RNGFailure.description)
     }
 
     // MARK: Digest
