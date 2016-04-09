@@ -23,7 +23,6 @@ env:
 before_install:
   - gem install cocoapods --no-document --quiet
   - gem install xcpretty --no-document --quiet
-  - gem install slather --no-document --quiet
   - cd $TRAVIS_BUILD_DIR
 script:
   - set -o pipefail
@@ -43,6 +42,6 @@ script:
       pod lib lint --quick;
     fi
 after_success:
-    slather
+  - bash <(curl -s https://codecov.io/bash)
 notifications:
   email: false
