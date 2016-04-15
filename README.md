@@ -28,6 +28,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ##Requirements
 
 - iOS 9.0 or later
+- OSX 10.11 or later
 - Swift 2.0+
 - Xcode 7.3+
 
