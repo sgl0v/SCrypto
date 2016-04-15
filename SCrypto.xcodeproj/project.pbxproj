@@ -302,7 +302,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\nMODULE_DIR=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nmkdir -p \"${MODULE_DIR}\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_DIR}/module.map\"\necho \"Created module map for ${PLATFORM_NAME}.\"\n";
+			shellScript = "${PROJECT_DIR}/modulemap.sh \"${PLATFORM_NAME}\" \"${PROJECT_DIR}\"\n";
 		};
 		5EAB86781CADD05300182F7C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -315,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SDKPATH=$(eval \"xcrun -sdk ${SDKROOT} -show-sdk-path\")\nMODULE_DIR=\"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nmkdir -p \"${MODULE_DIR}\"\nprintf \"module CommonCrypto [system] {\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonCrypto.h\\\"\\n\\\nheader \\\"${SDKPATH}/usr/include/CommonCrypto/CommonRandom.h\\\"\\n\\\nexport *\\n\\\n}\" > \"${MODULE_DIR}/module.map\"\necho \"Created module map for ${PLATFORM_NAME}.\"";
+			shellScript = "${PROJECT_DIR}/modulemap.sh \"${PLATFORM_NAME}\" \"${PROJECT_DIR}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -620,6 +620,7 @@
 				5EAB86711CADCF8F00182F7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5EAB86721CADCF8F00182F7C /* Build configuration list for PBXNativeTarget "SCrypto OSX Tests" */ = {
 			isa = XCConfigurationList;
@@ -628,6 +629,7 @@
 				5EAB86741CADCF8F00182F7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5ED8F9E81C51788B00DE0760 /* Build configuration list for PBXProject "SCrypto" */ = {
 			isa = XCConfigurationList;
