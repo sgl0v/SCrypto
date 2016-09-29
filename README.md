@@ -15,8 +15,8 @@
 SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ### Features
 
-- [x] Essential `NSData` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
-- [x] Swift 2.0 and Swift 2.2 support
+- [x] Essential `Data` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
+- [x] Swift 2.2 and Swift 3.0 support
 - [x] Cocoapods and Carthage compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
@@ -27,10 +27,9 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 
 ##Requirements
 
-- iOS 9.0 or later
-- OSX 10.11 or later
-- Swift 2.0+
-- Xcode 7.3+
+- iOS 9.0+ / macOS 10.11+
+- Swift 3.0+
+- Xcode 8.0+
 
 ---
 
@@ -50,7 +49,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
-pod 'SCrypto', '~> 1.0.0'
+pod 'SCrypto', '~> 2.0.0'
 ```
 
 Then, run the following command:
@@ -120,8 +119,8 @@ let sha256 = "message".SHA256()
 Hash-based message authentication codes (or HMACs) provides a way for calculating message authentication codes using a cryptographic hash function coupled with a secret key. You can use an HMAC to verify both the integrity and authenticity of a message. The following standard hash algorithm are supported: SHA1, MD5, SHA256, SHA384, SHA512, SHA224.
 
 ```swift
-let secretKey = try! NSData.random(32) 
-let message = "message".dataUsingEncoding(NSUTF8StringEncoding)!
+let secretKey = try! Data.random(32) 
+let message = "message".data(using: String.Encoding.utf8)!
 let hmac = message.hmac(.SHA256, key: secretKey)
 ```
 
@@ -129,7 +128,7 @@ let hmac = message.hmac(.SHA256, key: secretKey)
 Generates cryptographically strong random bits suitable for use as cryptographic keys, IVs, nonces etc.
 
 ```swift
-let randomBytes = try! NSData.random(16)
+let randomBytes = try! Data.random(16)
 ```
 
 ### Symmetric-key algorithms ([AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), [DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard), [TripleDES](https://en.wikipedia.org/wiki/Triple_DES), [CAST](https://en.wikipedia.org/wiki/CAST5), [RC2](https://en.wikipedia.org/wiki/RC2), [RC4](https://en.wikipedia.org/wiki/RC4), [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher)))
@@ -139,9 +138,9 @@ Symmetric-key algorithms use the same cryptographic keys for both encryption of 
 Here is the way to encrypt and decrypt data via AES algorithm in CBC mode with PKCS7 Padding:
 
 ```swift
-let plaintext = "plain text".dataUsingEncoding(NSUTF8StringEncoding)!
-let sharedSecretKey = "shared_secret_key".dataUsingEncoding(NSUTF8StringEncoding)!.SHA256() // AES-256
-let IV = try! NSData.random(16) // Randomly generated IV. Length is equal to the AES block size(128)
+let plaintext = "plain text".data(using: String.Encoding.utf8)!
+let sharedSecretKey = "shared_secret_key".data(using: String.Encoding.utf8)!.SHA256() // AES-256
+let IV = try! Data.random(16) // Randomly generated IV. Length is equal to the AES block size(128)
 let ciphertext = try! plaintext.encrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
 let plaintext2 = try! ciphertext.decrypt(.AES, options: .PKCS7Padding, key: sharedSecretKey, iv: IV)
 ```
@@ -150,8 +149,8 @@ let plaintext2 = try! ciphertext.decrypt(.AES, options: .PKCS7Padding, key: shar
 Key derivation functions are used for turning a passphrase into an arbitrary length key for use as a cryptographic key in subsequent operations.
 
 ```swift
-let password = "password".dataUsingEncoding(NSUTF8StringEncoding)!
-let salt = try! NSData.random(32)
+let password = "password".data(using: String.Encoding.utf8)!
+let salt = try! Data.random(32)
 let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 32)
 ```
 
