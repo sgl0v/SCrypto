@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SCrypto
+import SCrypto
 
 class SCryptoTests: XCTestCase {
 
@@ -53,32 +53,32 @@ class SCryptoTests: XCTestCase {
 
     func testSCryptoError() {
         XCTAssertTrue(SCryptoError(rawValue: 0) == nil)
-        XCTAssertTrue(SCryptoError(rawValue: -4300)! == .ParamError)
-        XCTAssertTrue(SCryptoError(rawValue: -4301)! == .BufferTooSmall)
-        XCTAssertTrue(SCryptoError(rawValue: -4302)! == .MemoryFailure)
-        XCTAssertTrue(SCryptoError(rawValue: -4303)! == .AlignmentError)
-        XCTAssertTrue(SCryptoError(rawValue: -4304)! == .DecodeError)
-        XCTAssertTrue(SCryptoError(rawValue: -4305)! == .Unimplemented)
-        XCTAssertTrue(SCryptoError(rawValue: -4306)! == .Overflow)
-        XCTAssertTrue(SCryptoError(rawValue: -4307)! == .RNGFailure)
+        XCTAssertTrue(SCryptoError(rawValue: -4300)! == .paramError)
+        XCTAssertTrue(SCryptoError(rawValue: -4301)! == .bufferTooSmall)
+        XCTAssertTrue(SCryptoError(rawValue: -4302)! == .memoryFailure)
+        XCTAssertTrue(SCryptoError(rawValue: -4303)! == .alignmentError)
+        XCTAssertTrue(SCryptoError(rawValue: -4304)! == .decodeError)
+        XCTAssertTrue(SCryptoError(rawValue: -4305)! == .unimplemented)
+        XCTAssertTrue(SCryptoError(rawValue: -4306)! == .overflow)
+        XCTAssertTrue(SCryptoError(rawValue: -4307)! == .rngFailure)
 
-        XCTAssertTrue(SCryptoError.ParamError.rawValue == -4300)
-        XCTAssertTrue(SCryptoError.BufferTooSmall.rawValue == -4301)
-        XCTAssertTrue(SCryptoError.MemoryFailure.rawValue == -4302)
-        XCTAssertTrue(SCryptoError.AlignmentError.rawValue == -4303)
-        XCTAssertTrue(SCryptoError.DecodeError.rawValue == -4304)
-        XCTAssertTrue(SCryptoError.Unimplemented.rawValue == -4305)
-        XCTAssertTrue(SCryptoError.Overflow.rawValue == -4306)
-        XCTAssertTrue(SCryptoError.RNGFailure.rawValue == -4307)
+        XCTAssertTrue(SCryptoError.paramError.rawValue == -4300)
+        XCTAssertTrue(SCryptoError.bufferTooSmall.rawValue == -4301)
+        XCTAssertTrue(SCryptoError.memoryFailure.rawValue == -4302)
+        XCTAssertTrue(SCryptoError.alignmentError.rawValue == -4303)
+        XCTAssertTrue(SCryptoError.decodeError.rawValue == -4304)
+        XCTAssertTrue(SCryptoError.unimplemented.rawValue == -4305)
+        XCTAssertTrue(SCryptoError.overflow.rawValue == -4306)
+        XCTAssertTrue(SCryptoError.rngFailure.rawValue == -4307)
 
-        XCTAssertNotNil(SCryptoError.ParamError.description)
-        XCTAssertNotNil(SCryptoError.BufferTooSmall.description)
-        XCTAssertNotNil(SCryptoError.MemoryFailure.description)
-        XCTAssertNotNil(SCryptoError.AlignmentError.description)
-        XCTAssertNotNil(SCryptoError.DecodeError.description)
-        XCTAssertNotNil(SCryptoError.Unimplemented.description)
-        XCTAssertNotNil(SCryptoError.Overflow.description)
-        XCTAssertNotNil(SCryptoError.RNGFailure.description)
+        XCTAssertNotNil(SCryptoError.paramError.description)
+        XCTAssertNotNil(SCryptoError.bufferTooSmall.description)
+        XCTAssertNotNil(SCryptoError.memoryFailure.description)
+        XCTAssertNotNil(SCryptoError.alignmentError.description)
+        XCTAssertNotNil(SCryptoError.decodeError.description)
+        XCTAssertNotNil(SCryptoError.unimplemented.description)
+        XCTAssertNotNil(SCryptoError.overflow.description)
+        XCTAssertNotNil(SCryptoError.rngFailure.description)
     }
 
     // MARK: Digest
@@ -123,8 +123,8 @@ class SCryptoTests: XCTestCase {
         XCTAssertEqual(Consts.message.SHA512(), Consts.SHA512)
     }
 
-    private func digest(message: String, expectedDigest: String, algorithm: (NSData) -> NSData) {
-        let messageData = message.dataUsingEncoding(NSUTF8StringEncoding)!
+    fileprivate func digest(_ message: String, expectedDigest: String, algorithm: (Data) -> Data) {
+        let messageData = message.data(using: String.Encoding.utf8)!
         let digest = algorithm(messageData).hexString()
         XCTAssertEqual(digest, expectedDigest)
     }
@@ -132,9 +132,9 @@ class SCryptoTests: XCTestCase {
     // MARK: Random
 
     func testRandom() {
-        let randomData1 = try! NSData.random(16)
-        let randomData2 = try! NSData.random(16)
-        let randomData3 = try! NSData.random(16)
+        let randomData1 = try! Data.random(16)
+        let randomData2 = try! Data.random(16)
+        let randomData3 = try! Data.random(16)
         XCTAssertNotEqual(randomData1, randomData2)
         XCTAssertNotEqual(randomData1, randomData3)
         XCTAssertNotEqual(randomData2, randomData3)
@@ -143,32 +143,32 @@ class SCryptoTests: XCTestCase {
     // MARK: HMAC
 
     func testHMAC_MD5() {
-        hmac(.MD5, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacMD5)
+        hmac(.md5, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacMD5)
     }
 
     func testHMAC_SHA1() {
-        hmac(.SHA1, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA1)
+        hmac(.sha1, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA1)
     }
 
     func testHMAC_SHA256() {
-        hmac(.SHA256, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA256)
+        hmac(.sha256, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA256)
     }
 
     func testHMAC_SHA384() {
-        hmac(.SHA384, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA384)
+        hmac(.sha384, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA384)
     }
 
     func testHMAC_SHA512() {
-        hmac(.SHA512, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA512)
+        hmac(.sha512, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA512)
     }
 
     func testHMAC_SHA224() {
-        hmac(.SHA224, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA224)
+        hmac(.sha224, key: Consts.key, message: Consts.message, expectedHMAC: Consts.hmacSHA224)
     }
 
-    private func hmac(algorithm: HMAC.Algorithm, key: String, message: String, expectedHMAC: String) {
-        let keyData = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let messageData = message.dataUsingEncoding(NSUTF8StringEncoding)!
+    fileprivate func hmac(_ algorithm: HMAC.Algorithm, key: String, message: String, expectedHMAC: String) {
+        let keyData = key.data(using: String.Encoding.utf8)!
+        let messageData = message.data(using: String.Encoding.utf8)!
         let hmac = messageData.hmac(algorithm, key: keyData).hexString()
         XCTAssertEqual(hmac, expectedHMAC)
         XCTAssertEqual(hmac, message.hmac(algorithm, key: key))
@@ -177,30 +177,30 @@ class SCryptoTests: XCTestCase {
     // MARK: PBKDF
 
     func testDerivedKey_SHA1() {
-        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.dataUsingEncoding(NSUTF8StringEncoding)!.length, pseudoRandomAlgorithm: .SHA1, derivedKeyLength: 16, msec: 100)
-        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA1, rounds: 20, derivedKeyLength: 16, expectedDerivedKey: Consts.pbkdfSHA1)
+        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.data(using: String.Encoding.utf8)!.count, pseudoRandomAlgorithm: .sha1, derivedKeyLength: 16, msec: 100)
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .sha1, rounds: 20, derivedKeyLength: 16, expectedDerivedKey: Consts.pbkdfSHA1)
     }
 
     func testDerivedKey_SHA256() {
-        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.dataUsingEncoding(NSUTF8StringEncoding)!.length, pseudoRandomAlgorithm: .SHA256, derivedKeyLength: 32, msec: 100)
-        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA256, rounds: 20, derivedKeyLength: 32, expectedDerivedKey: Consts.pbkdfSHA256)
+        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.data(using: String.Encoding.utf8)!.count, pseudoRandomAlgorithm: .sha256, derivedKeyLength: 32, msec: 100)
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .sha256, rounds: 20, derivedKeyLength: 32, expectedDerivedKey: Consts.pbkdfSHA256)
     }
 
     func testDerivedKey_SHA512() {
-        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.dataUsingEncoding(NSUTF8StringEncoding)!.length, pseudoRandomAlgorithm: .SHA512, derivedKeyLength: 64, msec: 100)
-        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .SHA512, rounds: 20, derivedKeyLength: 64, expectedDerivedKey: Consts.pbkdfSHA512)
+        calibrate(Consts.key, saltLength: Consts.pbkdfSalt.data(using: String.Encoding.utf8)!.count, pseudoRandomAlgorithm: .sha512, derivedKeyLength: 64, msec: 100)
+        PBKDF2(Consts.key, salt: Consts.pbkdfSalt, pseudoRandomAlgorithm: .sha512, rounds: 20, derivedKeyLength: 64, expectedDerivedKey: Consts.pbkdfSHA512)
     }
 
-    private func PBKDF2(password: String, salt: String, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: UInt32, derivedKeyLength: Int, expectedDerivedKey: String) {
-        let password = password.dataUsingEncoding(NSUTF8StringEncoding)!
-        let salt = salt.dataUsingEncoding(NSUTF8StringEncoding)!
+    fileprivate func PBKDF2(_ password: String, salt: String, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, rounds: UInt32, derivedKeyLength: Int, expectedDerivedKey: String) {
+        let password = password.data(using: String.Encoding.utf8)!
+        let salt = salt.data(using: String.Encoding.utf8)!
         let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: pseudoRandomAlgorithm, rounds: rounds, derivedKeyLength: derivedKeyLength)
-        XCTAssertEqual(derivedKey.length, derivedKeyLength)
+        XCTAssertEqual(derivedKey.count, derivedKeyLength)
         XCTAssertEqual(derivedKey.hexString(), expectedDerivedKey)
     }
 
-    private func calibrate(password: String, saltLength: Int, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, derivedKeyLength: Int, msec: UInt32) {
-        let password = password.dataUsingEncoding(NSUTF8StringEncoding)!
+    fileprivate func calibrate(_ password: String, saltLength: Int, pseudoRandomAlgorithm: PBKDF.PseudoRandomAlgorithm, derivedKeyLength: Int, msec: UInt32) {
+        let password = password.data(using: String.Encoding.utf8)!
         let iterations = password.calibrate(saltLength, pseudoRandomAlgorithm: pseudoRandomAlgorithm, derivedKeyLength: derivedKeyLength, msec: msec)
         XCTAssertTrue(iterations > 0)
     }
@@ -208,24 +208,25 @@ class SCryptoTests: XCTestCase {
     // MARK: Cryptor
 
     func testAES_CBC_128() {
-        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128, algorithm: .AES, options: [])
-        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: Consts.aesIV_128, expectedCyphertext: Consts.aesCiphertext_CBC_128_IV, algorithm: .AES, options: [])
-        cipher(Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions([]), key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128_Padding, algorithm: .AES, options: .PKCS7Padding)
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128, algorithm: .aes, options: [])
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_128, IV: Consts.aesIV_128, expectedCyphertext: Consts.aesCiphertext_CBC_128_IV, algorithm: .aes, options: [])
+
+        cipher((Consts.message.data(using: String.Encoding.utf8)?.base64EncodedString())!, key: Consts.aesKey_128, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_128_Padding, algorithm: .aes, options: .PKCS7Padding)
     }
 
     func testAES_CBC_256() {
-        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256, algorithm: .AES, options: [])
-        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: Consts.aesIV_256, expectedCyphertext: Consts.aesCiphertext_CBC_256_IV, algorithm: .AES, options: [])
-        cipher(Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!.base64EncodedStringWithOptions([]), key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256_Padding, algorithm: .AES, options: .PKCS7Padding)
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256, algorithm: .aes, options: [])
+        cipher(Consts.aesPlaintext, key: Consts.aesKey_256, IV: Consts.aesIV_256, expectedCyphertext: Consts.aesCiphertext_CBC_256_IV, algorithm: .aes, options: [])
+        cipher((Consts.message.data(using: String.Encoding.utf8)?.base64EncodedString())!, key: Consts.aesKey_256, IV: nil, expectedCyphertext: Consts.aesCiphertext_CBC_256_Padding, algorithm: .aes, options: .PKCS7Padding)
     }
 
     func testThrowsAlignmentError() {
         var didFail = false
         do {
-            let plaintext = Consts.message.dataUsingEncoding(NSUTF8StringEncoding)!
-            let aesKey = NSData(base64EncodedString: Consts.aesKey_256, options: [])!
-            try plaintext.encrypt(.AES, options: [], key: aesKey, iv: nil)
-        } catch SCryptoError.AlignmentError {
+            let plaintext = Consts.message.data(using: String.Encoding.utf8)!
+            let aesKey = Data(base64Encoded: Consts.aesKey_256, options: [])!
+            try _ = plaintext.encrypt(.aes, options: [], key: aesKey, iv: nil)
+        } catch SCryptoError.alignmentError {
             didFail = true
         } catch {
             XCTFail()
@@ -233,14 +234,14 @@ class SCryptoTests: XCTestCase {
         XCTAssertTrue(didFail, "AES requires padding in CBC mode!")
     }
 
-    func cipher(plaintext: String, key: String, IV: String?, expectedCyphertext: String, algorithm: Cipher.Algorithm, options: Cipher.Options) {
-        let plaintext = NSData(base64EncodedString: plaintext, options: [])!
-        let aesKey = NSData(base64EncodedString: key, options: [])!
-        let IV = IV == nil ? nil : NSData(base64EncodedString: IV!, options: [])
+    func cipher(_ plaintext: String, key: String, IV: String?, expectedCyphertext: String, algorithm: Cipher.Algorithm, options: Cipher.Options) {
+        let plaintext = Data(base64Encoded: plaintext, options: [])!
+        let aesKey = Data(base64Encoded: key, options: [])!
+        let IV = IV == nil ? nil : Data(base64Encoded: IV!, options: [])
         let ciphertext = try! plaintext.encrypt(algorithm, options: options, key: aesKey, iv: IV)
         let plaintextProof = try! ciphertext.decrypt(algorithm, options: options, key: aesKey, iv: IV)
         XCTAssertEqual(plaintext, plaintextProof)
-        XCTAssertEqual(ciphertext.base64EncodedStringWithOptions([]), expectedCyphertext)
+        XCTAssertEqual(ciphertext.base64EncodedString(), expectedCyphertext)
     }
 
 }

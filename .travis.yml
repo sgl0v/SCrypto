@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8
 sudo: false
 env:
   global:
@@ -8,8 +8,8 @@ env:
   - WORKSPACE="SCrypto.xcworkspace"
   - IOS_FRAMEWORK_SCHEME="SCrypto iOS"
   - OSX_FRAMEWORK_SCHEME="SCrypto OSX" 
-  - IOS_SDK=iphonesimulator9.3
-  - OSX_SDK=macosx10.11  
+  - IOS_SDK=iphonesimulator10.0
+  - OSX_SDK=macosx10.12
   matrix:
     - DESTINATION="OS=9.0,name=iPhone 4S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="YES"
     - DESTINATION="OS=9.0,name=iPhone 5"           SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
@@ -19,6 +19,7 @@ env:
     - DESTINATION="OS=9.1,name=iPhone 6 Plus"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
     - DESTINATION="OS=9.2,name=iPhone 6S"          SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
     - DESTINATION="OS=9.3,name=iPhone 6S Plus"     SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
+    - DESTINATION="OS=10.0,name=iPhone 6S Plus"    SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
     - DESTINATION="arch=x86_64"                    SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"     RUN_TESTS="YES" BUILD="YES" POD_LINT="NO"
 before_install:
   - gem install cocoapods --no-document --quiet
