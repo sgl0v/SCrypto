@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "SCrypto"
-  spec.version = "2.0.0"
+  spec.version = "3.0.0"
   spec.summary = "The SCrypto framework provides neat Swift API for CommonCrypto routines."
   spec.homepage = "https://github.com/sgl0v/SCrypto"
   spec.license = { type: 'MIT', file: 'LICENSE' }
@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
   CMD
 
   # add the new module to Import Paths
-  spec.xcconfig = { 
+  spec.xcconfig = {
   "SWIFT_INCLUDE_PATHS" => "$(PODS_ROOT)/SCrypto/Frameworks/$(PLATFORM_NAME)",
   "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/SCrypto/Frameworks/$(PLATFORM_NAME)"
   }
