@@ -1,13 +1,13 @@
-#<p align="center">SCrypto</p>
+# <p align="center">SCrypto</p>
 
-[![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto) 
+[![Build Status](https://travis-ci.org/sgl0v/SCrypto.svg?branch=master)](https://travis-ci.org/sgl0v/SCrypto)
 [![codecov.io](https://codecov.io/github/sgl0v/SCrypto/coverage.svg?branch=master)](https://codecov.io/github/sgl0v/SCrypto?branch=master)
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Platform](https://img.shields.io/cocoapods/p/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 
-[[Overview](#overview) &bull; [Requirements](#requirements) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Alternatives](#alternatives) &bull; [Licence](#licence)] 
+[[Overview](#overview) &bull; [Requirements](#requirements) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Alternatives](#alternatives) &bull; [Licence](#licence)]
 
 ---
 
@@ -16,7 +16,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ### Features
 
 - [x] Essential `Data` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
-- [x] Swift 2.2 and Swift 3.0 support
+- [x] Swift 3.* and Swift 4.0 support
 - [x] Cocoapods and Carthage compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
@@ -100,7 +100,7 @@ $ git submodule add https://github.com/sgl0v/SCrypto.git
 - You will see two different `SCrypto.xcodeproj` folders each with two different versions of the `SCrypto.framework iOS` nested inside a `Products` folder.
 
     > It doesn't matter which `Products` folder you choose from.
-    
+
 - Just select the `SCrypto.framework iOS` and that's it!
 
 	> The `SCrypto.framework` is automagically added as a target dependency and should appear as a linked and embedded framework in the `Build Phases` section.
@@ -119,7 +119,7 @@ let sha256 = "message".SHA256()
 Hash-based message authentication codes (or HMACs) provides a way for calculating message authentication codes using a cryptographic hash function coupled with a secret key. You can use an HMAC to verify both the integrity and authenticity of a message. The following standard hash algorithm are supported: SHA1, MD5, SHA256, SHA384, SHA512, SHA224.
 
 ```swift
-let secretKey = try! Data.random(32) 
+let secretKey = try! Data.random(32)
 let message = "message".data(using: String.Encoding.utf8)!
 let hmac = message.hmac(.SHA256, key: secretKey)
 ```
@@ -164,7 +164,7 @@ Looking for something else? Try another Swift CommonCrypto wrappers:
 - [Crypto](https://github.com/soffes/Crypto)
 
 ---
- 
+
 ##Licence
 
-`SCrypto` is MIT-licensed. See `LICENSE`. 
+`SCrypto` is MIT-licensed. See `LICENSE`.
