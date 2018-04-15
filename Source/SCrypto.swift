@@ -100,7 +100,7 @@ public final class MessageDigest {
     public enum Algorithm {
         case md2, md4, md5, sha1, sha224, sha256, sha384, sha512
 
-        typealias Function = (_ data: UnsafeRawPointer, _ len: CC_LONG, _ md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>!
+        typealias Function = (_ data: UnsafeRawPointer, _ len: CC_LONG, _ md: UnsafeMutablePointer<UInt8>) -> UnsafeMutablePointer<UInt8>?
 
         internal var digest: (length: Int32, function: Function) {
             switch self {

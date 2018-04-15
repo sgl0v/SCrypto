@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "SCrypto"
-  spec.version = "3.0.1"
+  spec.version = "3.0.2"
   spec.summary = "The SCrypto framework provides neat Swift API for CommonCrypto routines."
   spec.homepage = "https://github.com/sgl0v/SCrypto"
   spec.license = { type: 'MIT', file: 'LICENSE' }
