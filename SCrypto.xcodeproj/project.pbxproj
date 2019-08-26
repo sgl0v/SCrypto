@@ -15,6 +15,8 @@
 		5ED8F9F91C51788B00DE0760 /* SCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */; };
 		5ED8F9FE1C51788B00DE0760 /* SCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */; };
 		5ED8FA0A1C51827400DE0760 /* SCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8FA091C51827400DE0760 /* SCrypto.swift */; };
+		E788F8E823142333003438FA /* modulemap.sh in Resources */ = {isa = PBXBuildFile; fileRef = E788F8E623142333003438FA /* modulemap.sh */; };
+		E788F8E923142333003438FA /* build_framework.sh in Resources */ = {isa = PBXBuildFile; fileRef = E788F8E723142333003438FA /* build_framework.sh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,9 @@
 		5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCryptoTests.swift; sourceTree = "<group>"; };
 		5ED8F9FF1C51788B00DE0760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED8FA091C51827400DE0760 /* SCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCrypto.swift; sourceTree = "<group>"; };
+		E788F8E423142264003438FA /* SCrypto.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = SCrypto.podspec; sourceTree = "<group>"; };
+		E788F8E623142333003438FA /* modulemap.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = modulemap.sh; sourceTree = "<group>"; };
+		E788F8E723142333003438FA /* build_framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_framework.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,9 @@
 		5ED8F9E41C51788B00DE0760 = {
 			isa = PBXGroup;
 			children = (
+				E788F8E423142264003438FA /* SCrypto.podspec */,
+				E788F8E723142333003438FA /* build_framework.sh */,
+				E788F8E623142333003438FA /* modulemap.sh */,
 				5ED8F9F01C51788B00DE0760 /* Source */,
 				5ED8F9FC1C51788B00DE0760 /* Tests */,
 				5ED8F9EF1C51788B00DE0760 /* Products */,
@@ -222,7 +230,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Maksym Shcheglov";
 				TargetAttributes = {
 					5EAB865D1CADCF8F00182F7C = {
@@ -243,10 +251,11 @@
 			};
 			buildConfigurationList = 5ED8F9E81C51788B00DE0760 /* Build configuration list for PBXProject "SCrypto" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 5ED8F9E41C51788B00DE0760;
 			productRefGroup = 5ED8F9EF1C51788B00DE0760 /* Products */;
@@ -280,6 +289,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E788F8E923142333003438FA /* build_framework.sh in Resources */,
+				E788F8E823142333003438FA /* modulemap.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PROJECT_DIR}/modulemap.sh \"${PROJECT_DIR}\"\n";
+			shellScript = "# ${PROJECT_DIR}/modulemap.sh \"${PROJECT_DIR}\"\n";
 		};
 		5EAB86781CADD05300182F7C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -317,7 +328,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PROJECT_DIR}/modulemap.sh \"${PROJECT_DIR}\"";
+			shellScript = "# ${PROJECT_DIR}/modulemap.sh \"${PROJECT_DIR}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -391,7 +402,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -416,7 +426,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -432,7 +441,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -448,7 +456,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sgl0v.SCrypto-OSXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -456,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -504,6 +512,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -514,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -555,6 +565,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -584,7 +595,6 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = (
 					"-Wextra",
 					"-Wall",
@@ -613,7 +623,6 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/**";
-				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = (
 					"-Wextra",
 					"-Wall",
@@ -628,7 +637,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -639,7 +647,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sgl0v.SCryptoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
