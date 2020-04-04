@@ -15,8 +15,6 @@
 		5ED8F9F91C51788B00DE0760 /* SCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED8F9EE1C51788B00DE0760 /* SCrypto.framework */; };
 		5ED8F9FE1C51788B00DE0760 /* SCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8F9FD1C51788B00DE0760 /* SCryptoTests.swift */; };
 		5ED8FA0A1C51827400DE0760 /* SCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8FA091C51827400DE0760 /* SCrypto.swift */; };
-		E788F8E823142333003438FA /* modulemap.sh in Resources */ = {isa = PBXBuildFile; fileRef = E788F8E623142333003438FA /* modulemap.sh */; };
-		E788F8E923142333003438FA /* build_framework.sh in Resources */ = {isa = PBXBuildFile; fileRef = E788F8E723142333003438FA /* build_framework.sh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,8 +287,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E788F8E923142333003438FA /* build_framework.sh in Resources */,
-				E788F8E823142333003438FA /* modulemap.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
