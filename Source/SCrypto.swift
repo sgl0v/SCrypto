@@ -6,6 +6,7 @@
 //  Copyright © 2016 Maksym Shcheglov. All rights reserved.
 //
 
+import Foundation
 import CommonCrypto
 
 public extension Data {

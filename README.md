@@ -11,21 +11,20 @@
 
 ---
 
-##Overview
+## Overview
 SCrypto provides neat Swift interface to access the CommonCrypto routines.
 ### Features
 
 - [x] Essential `Data` and `String` extensions for message digest, HMAC, PBKDF, symmetric encryption calculation
-- [x] Swift 3.* and Swift 4.0 support
-- [x] Cocoapods and Carthage compatible
+- [x] Swift 5.1 support
+- [x] Cocoapods, Carthage and Swift Package Manager compatible
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/SCrypto)
 - [x] iOS and OS X support
-- [ ] Swift Package Manager support
 
 ---
 
-##Requirements
+## Requirements
 
 - iOS 9.0+ / macOS 10.11+
 - Swift 3.0+
@@ -33,7 +32,7 @@ SCrypto provides neat Swift interface to access the CommonCrypto routines.
 
 ---
 
-##Installation
+## Installation
 ### Cocoapods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
@@ -74,6 +73,20 @@ github "sgl0v/SCrypto" ~> 1.0.0
 
 Run `carthage update` to build the framework and drag the built `SCrypto.framework` into your Xcode project.
 
+### Swift Package Manager
+
+You can add the SCrypto framework to your project via Swift Package Manager. Add the following line to the dependencies in your `Package.swift` file:
+
+```swift
+.package(url: "https://github.com/sgl0v/SCrypto", exact: "<latest version>"),
+```
+
+Finally, include "SCrypto" as a dependency for your executable target:
+
+```
+.target(name: "<target name>", dependencies: ["SCrypto"])
+```
+
 ### Manually
 If you prefer not to use either of the mentioned dependency managers, you can integrate SCrypto into your project manually.
 
@@ -107,7 +120,7 @@ $ git submodule add https://github.com/sgl0v/SCrypto.git
 
 ---
 
-##Usage
+## Usage
 ### Message Digest ([MD5](https://en.wikipedia.org/wiki/MD5), [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm))
 Message digests are secure one-way [cryptographic hash functions](https://en.wikipedia.org/wiki/Cryptographic_hash_function) that take arbitrary-sized data and output a fixed-length hash value.
 
@@ -156,7 +169,7 @@ let derivedKey = try! password.derivedKey(salt, pseudoRandomAlgorithm: .SHA256, 
 
 ---
 
-##Alternatives
+## Alternatives
 Looking for something else? Try another Swift CommonCrypto wrappers:
 
 - [RNCryptor](https://github.com/RNCryptor/RNCryptor)
@@ -165,6 +178,6 @@ Looking for something else? Try another Swift CommonCrypto wrappers:
 
 ---
 
-##Licence
+## Licence
 
 `SCrypto` is MIT-licensed. See `LICENSE`.
