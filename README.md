@@ -5,7 +5,6 @@
 [![Version](https://img.shields.io/cocoapods/v/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
-[![Platform](https://img.shields.io/cocoapods/p/SCrypto.svg?style=flat)](http://cocoadocs.org/docsets/SCrypto)
 
 [[Overview](#overview) &bull; [Requirements](#requirements) &bull; [Installation](#installation) &bull; [Usage](#usage) &bull; [Alternatives](#alternatives) &bull; [Licence](#licence)]
 
